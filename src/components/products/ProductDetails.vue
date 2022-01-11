@@ -11,47 +11,32 @@
                 <div :style="{ background: '#fff' }">
 
                     <div :style="{ background: '', padding: '12px', textAlign: 'center' }">
-                        <a-row :gutter="16" :style="{ margin: '12px 0' }">
-                            <a-col :span="8">
-                                <a-card hoverable style="width: 300px">
-                                    <img
-                                        :style="{ width: '100%', height: '240px', border: '' }"
-                                        slot="cover"
-                                        alt="example"
-                                        src="http://res.cloudinary.com/dk8b24l10/image/upload/v1641908136/product-catalog/product_image_klmdi3.jpg"
-                                    />
+                        <a-list item-layout="vertical" size="large" :data-source="listData">
+                            <a-list-item slot="renderItem" key="item.title" slot-scope="">
+                                <img
+                                    slot="extra"
+                                    width="272"
+                                    alt="logo"
+                                    src="http://res.cloudinary.com/dk8b24l10/image/upload/v1641908136/product-catalog/product_image_klmdi3.jpg"
+                                />
 
-                                    <template slot="actions" class="ant-card-actions">
-                                        <a-rate v-model="rating_value" />
-                                        <!-- <a-icon key="edit" type="edit" /> -->
-                                        <a-icon key="ellipsis" type="heart" title="add to your favorites" />
-                                    </template>
-                                </a-card>
-                            </a-col>
-
-                            <a-col :span="16">
-                                <a-card hoverable style="width: 300px">
-                                    <img
-                                        slot="cover"
-                                        alt="example"
-                                        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                                    />
-
-                                    <template slot="actions" class="ant-card-actions">
-                                        <a-icon key="setting" type="setting" />
-                                        <a-icon key="edit" type="edit" />
-                                        <a-icon key="ellipsis" type="ellipsis" />
-                                    </template>
-
-                                    <a-card-meta title="Card title" description="This is the description">
-                                        <!-- <a-avatar
-                                            slot="avatar"
-                                            src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                                        /> -->
-                                    </a-card-meta>
-                                </a-card>
-                            </a-col>
-                        </a-row>
+                                <!-- <a-list-item-meta :description="item.description">
+                                    <a slot="title" :href="item.href">{{ item.title }}</a>
+                                    <a-avatar slot="avatar" :src="item.avatar" />
+                                </a-list-item-meta> -->
+                                <a-list size="small">
+                                    <a-list-item>Product name: Mouse100</a-list-item>
+                                    <a-list-item>Category: Mouse</a-list-item>
+                                    <a-list-item>Supplier: Vale</a-list-item>
+                                    <a-list-item>Stock available: 4</a-list-item>
+                                    <a-list-item>
+                                        <span>Rating:</span>
+                                        <a-rate v-if="!load_rating" v-model="rating_value" title="click to rate the product" @change="toRateProduct" />
+                                        <a-spin v-if="load_rating" />
+                                    </a-list-item>
+                                </a-list>
+                            </a-list-item>
+                        </a-list>
                     </div>
                 </div>
             </a-layout-content>
@@ -62,6 +47,19 @@
 <script>
     // import { mapActions } from "vuex"
 
+    const listData = [];
+    for (let i = 0; i < 1; i++) {
+        listData.push({
+            href: 'https://www.antdv.com/',
+            title: `ant design vue part ${i}`,
+            avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+            description:
+            'Ant Design, a design language for background applications, is refined by Ant UED Team.',
+            content:
+            'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+        });
+    }
+
     export default{
         name: "ProductDetails",
 
@@ -70,6 +68,20 @@
                 loading: false,
                 createBtnDisabled: true,
                 rating_value: 3,
+                load_rating: false,
+
+                listData,
+                pagination: {
+                    onChange: page => {
+                    console.log(page);
+                    },
+                    pageSize: 3,
+                },
+                actions: [
+                    { type: 'star-o', text: '156' },
+                    { type: 'like-o', text: '156' },
+                    { type: 'message', text: '2' },
+                ],
             }
         },
 
@@ -78,7 +90,12 @@
 
             // openCreateSchedule(){
             //     this.$router.push({ name: "CreateProject" })
-            // }
+            // },
+
+            toRateProduct(){
+                console.log("Product rated", this.rating_value)
+                this.load_rating = true
+            }
         },
 
         async created(){

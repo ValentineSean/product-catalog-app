@@ -22,9 +22,16 @@
                                     />
 
                                     <template slot="actions" class="ant-card-actions">
-                                        <a-rate v-model="rating_value" />
+                                        <a-rate v-model="rating_value" disabled />
                                         <!-- <a-icon key="edit" type="edit" /> -->
-                                        <a-icon key="ellipsis" type="heart" title="add to your favorites" />
+                                        <a-icon
+                                            key="ellipsis"
+                                            type="heart"
+                                            title="add to your favorites"
+                                            v-on:click.stop="toFavorites"
+                                            theme="filled"
+                                            :style="{ fontSize: '24px', color: 'blue' }"
+                                        />
                                     </template>
 
                                     <a-card-meta title="Mouse" description="Supplier: VSC">
@@ -33,49 +40,53 @@
                             </a-col>
 
                             <a-col :span="8">
-                                <a-card hoverable style="width: 300px">
+                                <a-card hoverable style="width: 300px" @click="openProductDetails">
                                     <img
                                         :style="{ width: '100%', height: '240px', border: '' }"
                                         slot="cover"
                                         alt="example"
-                                        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                                        src="http://res.cloudinary.com/dk8b24l10/image/upload/v1641908136/product-catalog/product_image_klmdi3.jpg"
                                     />
 
                                     <template slot="actions" class="ant-card-actions">
-                                        <a-icon key="setting" type="setting" />
-                                        <a-icon key="edit" type="edit" />
-                                        <a-icon key="ellipsis" type="ellipsis" />
+                                        <a-rate v-model="rating_value" disabled />
+                                        <!-- <a-icon key="edit" type="edit" /> -->
+                                        <a-icon
+                                            key="ellipsis"
+                                            type="heart"
+                                            title="add to your favorites"
+                                            v-on:click.stop="toFavorites"
+                                            :style="{ fontSize: '24px', color: 'blue' }"
+                                        />
                                     </template>
 
-                                    <a-card-meta title="Card title" description="This is the description">
-                                        <!-- <a-avatar
-                                            slot="avatar"
-                                            src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                                        /> -->
+                                    <a-card-meta title="Mouse" description="Supplier: VSC">
                                     </a-card-meta>
                                 </a-card>
                             </a-col>
 
                             <a-col :span="8">
-                                <a-card hoverable style="width: 300px">
+                                <a-card hoverable style="width: 300px" @click="openProductDetails">
                                     <img
                                         :style="{ width: '100%', height: '240px', border: '' }"
                                         slot="cover"
                                         alt="example"
-                                        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                                        src="http://res.cloudinary.com/dk8b24l10/image/upload/v1641908136/product-catalog/product_image_klmdi3.jpg"
                                     />
 
                                     <template slot="actions" class="ant-card-actions">
-                                        <a-icon key="setting" type="setting" />
-                                        <a-icon key="edit" type="edit" />
-                                        <a-icon key="ellipsis" type="ellipsis" />
+                                        <a-rate v-model="rating_value" disabled />
+                                        <!-- <a-icon key="edit" type="edit" /> -->
+                                        <a-icon
+                                            key="ellipsis"
+                                            type="heart"
+                                            title="add to your favorites"
+                                            v-on:click.stop="toFavorites"
+                                            :style="{ fontSize: '24px', color: 'blue' }"
+                                        />
                                     </template>
 
-                                    <a-card-meta title="Card title" description="This is the description">
-                                        <!-- <a-avatar
-                                            slot="avatar"
-                                            src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                                        /> -->
+                                    <a-card-meta title="Mouse" description="Supplier: VSC">
                                     </a-card-meta>
                                 </a-card>
                             </a-col>
@@ -110,6 +121,10 @@
 
             openProductDetails(){
                 this.$router.push({ name: "Product Details" })
+            },
+
+            toFavorites(){
+                console.log("To favorites")
             }
         },
 
