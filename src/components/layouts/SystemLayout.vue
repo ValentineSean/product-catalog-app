@@ -11,17 +11,22 @@
 
       <a-menu class="layout-sider-menu" theme="dark" mode="inline">
         <a-menu-item key="1" @click="toProducts">
-            <a-icon type="dashboard" />
+            <a-icon type="shop" />
             <span>Products</span>
         </a-menu-item>
 
         <a-menu-item key="2" @click="toFavorites">
-            <a-icon type="team" />
+            <a-icon type="heart" />
             <span>Favorites</span>
         </a-menu-item>
 
-        <a-menu-item key="3" @click="toUsers">
-            <a-icon type="money-collect" />
+        <a-menu-item key="3" @click="toStock">
+            <a-icon type="gold" />
+            <span>Stock</span>
+        </a-menu-item>
+
+        <a-menu-item key="4" @click="toUsers">
+            <a-icon type="team" />
             <span>Users</span>
         </a-menu-item>
       </a-menu>
@@ -85,8 +90,16 @@
         // ...mapActions(["fetchDepartments", "fetchRoles", "fetchUsers", "fetchFeeds", "activate"]),
         // ...mapActions(["logoutUser"]),
 
-        toDashboard(){
-            this.$router.replace({ name: "Dashboard" })
+        toProducts(){
+            this.$router.replace({ name: "Products" })
+        },
+
+        toStock(){
+            this.$router.replace({ name: "Stock" })
+        },
+
+        toFavorites(){
+            this.$router.replace({ name: "Favorites" })
         },
 
         toEmployees(){

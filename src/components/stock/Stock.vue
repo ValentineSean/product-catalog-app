@@ -7,14 +7,14 @@
         <div v-if="!loading">
             <a-row :style="{ border: '', display: 'flex', margin: '' }">
                 <a-col :span="12" :style="{ border: '', padding: '12px' }">
-                    <h1 :style="{ fontSize: '24px', margin: 'auto 0', border: '' }">Products</h1>
+                    <h1 :style="{ fontSize: '24px', margin: 'auto 0', border: '' }">Stock</h1>
                 </a-col>
 
                 <a-col :span="12" :style="{ border: '', padding: '12px', margin:'auto 0', diplay: 'flex' }">
                     <span :style="{ marginLeft: 'auto' }">
-                        <form>
+                        <a-form>
                             <a-row  :style="{ display: '' }">
-                                <a-col :span="12" :style="{ border: '' }">
+                                <a-col :span="8" :style="{ border: '' }">
                                     <form-item label="Search criteria">
                                         <a-select placeholder="Search criteria">
                                             <a-select-option value="product">Product</a-select-option>
@@ -24,7 +24,7 @@
                                     </form-item>
                                 </a-col>
 
-                                <a-col :span="12" :style="{ border: '', marginLeft: 'auto'}">
+                                <a-col :span="8" :style="{ border: '', margin: '0 auto'}">
                                     <form-item :style="{ display: 'flex', border: '', marginLeft: '24px' }">
                                         <a-auto-complete
                                             v-model="search_string"
@@ -50,8 +50,12 @@
                                         </a-auto-complete>
                                     </form-item>
                                 </a-col>
+
+                                <a-col :span="8" :style="{ display: 'flex', marginLeft: 'auto', border: '', padding: '' }">
+                                    <a-button type="primary" :style="{ marginLeft: 'auto', border: '' }">create new</a-button>
+                                </a-col>
                             </a-row>
-                        </form>
+                        </a-form>
                     </span>
                 </a-col>
             </a-row>
@@ -62,7 +66,7 @@
                     <div :style="{ background: '', padding: '', textAlign: '' }">
                         <a-row :gutter="16" :style="{ margin: '12px auto 0 auto', border: '' }">
                             <a-col :span="8" :style="{ margin: '12px auto' }">
-                                <a-card hoverable style="width: 300px" @click="openProductDetails" :style="{ border: '' }">
+                                <a-card style="width: 300px">
                                     <img
                                         :style="{ width: '100%', height: '240px', border: '' }"
                                         slot="cover"
@@ -75,23 +79,21 @@
                                             <a-rate v-model="rating_value" disabled />
                                             <!-- <a-icon key="edit" type="edit" /> -->
                                             <a-icon
-                                                key="ellipsis"
-                                                type="heart"
-                                                title="add to your favorites"
+                                                type="edit"
+                                                title="edit product information"
                                                 v-on:click.stop="toFavorites"
-                                                theme="filled"
                                                 :style="{ fontSize: '24px', color: 'blue', marginLeft: 'auto' }"
                                             />
                                         </span>
                                     </template>
 
-                                    <a-card-meta title="Mouse" description="Supplier: VSC">
+                                    <a-card-meta title="Mouse" description="Stock available: 4">
                                     </a-card-meta>
                                 </a-card>
                             </a-col>
 
                             <a-col :span="8" :style="{ margin: '12px auto' }">
-                                <a-card hoverable style="width: 300px" @click="openProductDetails">
+                                <a-card style="width: 300px">
                                     <img
                                         :style="{ width: '100%', height: '240px', border: '' }"
                                         slot="cover"
@@ -104,22 +106,21 @@
                                             <a-rate v-model="rating_value" disabled />
                                             <!-- <a-icon key="edit" type="edit" /> -->
                                             <a-icon
-                                                key="ellipsis"
-                                                type="heart"
-                                                title="add to your favorites"
+                                                type="edit"
+                                                title="edit product information"
                                                 v-on:click.stop="toFavorites"
                                                 :style="{ fontSize: '24px', color: 'blue', marginLeft: 'auto' }"
                                             />
                                         </span>
                                     </template>
 
-                                    <a-card-meta title="Mouse" description="Supplier: VSC">
+                                    <a-card-meta title="Mouse" description="Stock available: 4">
                                     </a-card-meta>
                                 </a-card>
                             </a-col>
 
                             <a-col :span="8" :style="{ margin: '12px auto' }">
-                                <a-card hoverable style="width: 300px" @click="openProductDetails">
+                                <a-card style="width: 300px">
                                     <img
                                         :style="{ width: '100%', height: '240px', border: '' }"
                                         slot="cover"
@@ -132,16 +133,15 @@
                                             <a-rate v-model="rating_value" disabled />
                                             <!-- <a-icon key="edit" type="edit" /> -->
                                             <a-icon
-                                                key="ellipsis"
-                                                type="heart"
-                                                title="add to your favorites"
+                                                type="edit"
+                                                title="edit product information"
                                                 v-on:click.stop="toFavorites"
                                                 :style="{ fontSize: '24px', color: 'blue', marginLeft: 'auto' }"
                                             />
                                         </span>
                                     </template>
 
-                                    <a-card-meta title="Mouse" description="Supplier: VSC">
+                                    <a-card-meta title="Mouse" description="Stock available: 4">
                                     </a-card-meta>
                                 </a-card>
                             </a-col>
@@ -167,7 +167,7 @@
     }
 
     export default{
-        name: "Products",
+        name: "Stock",
 
         data(){
             return{
