@@ -1,5 +1,7 @@
 <template>
     <div>
+        <CreateProduct @handleHide="hideCreateProduct" :createProductVisible="createProductVisible" />
+        <!-- <UpdateProduct :product="product" @handleHide="hideUpdateProduct" :updateProductVisible="updateProductVisible" /> -->
         <div class="loading-spinner" v-if="loading">
             <a-spin />
         </div>
@@ -52,7 +54,7 @@
                                 </a-col>
 
                                 <a-col :span="8" :style="{ display: 'flex', marginLeft: 'auto', border: '', padding: '' }">
-                                    <a-button type="primary" :style="{ marginLeft: 'auto', border: '' }">create stock</a-button>
+                                    <a-button type="primary" :style="{ marginLeft: 'auto', border: '' }" @click.prevent="openCreateProduct">Create Product</a-button>
                                 </a-col>
                             </a-row>
                         </a-form>
@@ -155,6 +157,8 @@
 
 <script>
     // import { mapActions } from "vuex"
+    import CreateProduct from "../../data_entry/create/CreateProduct"
+    //   import UpdateEmployee from "../../data_entry/update/UpdateEmployee"
 
     const searchAll = (items, term) =>{
         if(term){
@@ -169,10 +173,16 @@
     export default{
         name: "Stock",
 
+        components: {
+          CreateProduct,
+        //   UpdateEmployee,
+        },
+
         data(){
             return{
                 loading: false,
                 createBtnDisabled: true,
+                createProductVisible: false,
                 rating_value: 3,
                 search_string: "",
                 data_source: ["mango", "banana", "orange", "lemon", "lime"],
@@ -212,6 +222,15 @@
 
             onChange(value) {
                 console.log('onChange', value);
+            },
+
+            openCreateProduct(){
+                this.createProductVisible = true
+                // console.log("Create employee")
+            },
+
+            hideCreateProduct(){
+                this.createProductVisible = false
             },
         },
 

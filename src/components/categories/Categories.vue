@@ -144,8 +144,6 @@
 
 <script>
 //   import { mapActions, mapGetters } from "vuex"
-//   import CreateEmployee from "../../data_entry/create/CreateEmployee"
-//   import UpdateEmployee from "../../data_entry/update/UpdateEmployee"
 
   const allCategories = [
     {
