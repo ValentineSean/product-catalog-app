@@ -5,44 +5,64 @@
         </div>
 
         <div v-if="!loading">
-            <a-row>
-                <a-col :span="12">
-                    <h1 :style="{ margin: '12px 12px 0' }">Products</h1>
+            <a-row :style="{ border: '', display: 'flex', margin: '' }">
+                <a-col :span="12" :style="{ border: '', padding: '12px' }">
+                    <h1 :style="{ fontSize: '24px', margin: 'auto 0', border: '' }">Products</h1>
                 </a-col>
-                <a-col :span="12">
-                    <span>
-                        <form>
-                            <form-item label="Search criteria">
-                                <a-select placeholder="Search criteria">
-                                    <a-select-option value="product">Product</a-select-option>
-                                    <a-select-option value="category">Category</a-select-option>
-                                    <a-select-option value="supplier">Supplier</a-select-option>
-                                </a-select>
-                            </form-item>
 
-                            <form-item>
-                                <a-auto-complete
-                                    v-model="searc_string"
-                                    :data-source="search_source"
-                                    style="width: 200px"
-                                    placeholder="input here"
-                                    @select="onSelect"
-                                    @search="onSearch"
-                                    @change="onChange"
-                                />
-                            </form-item>
+                <a-col :span="12" :style="{ border: '', padding: '12px', margin:'auto 0', diplay: 'flex' }">
+                    <span :style="{ marginLeft: 'auto' }">
+                        <form>
+                            <a-row  :style="{ display: '' }">
+                                <a-col :span="12" :style="{ border: '' }">
+                                    <form-item label="Search criteria">
+                                        <a-select placeholder="Search criteria">
+                                            <a-select-option value="product">Product</a-select-option>
+                                            <a-select-option value="category">Category</a-select-option>
+                                            <a-select-option value="supplier">Supplier</a-select-option>
+                                        </a-select>
+                                    </form-item>
+                                </a-col>
+
+                                <a-col :span="12" :style="{ border: '', marginLeft: 'auto'}">
+                                    <form-item :style="{ display: 'flex', border: '', marginLeft: '24px' }">
+                                        <a-auto-complete
+                                            v-model="search_string"
+                                            :data-source="search_source"
+                                            style="width: 200px"
+                                            placeholder="input here"
+                                            @select="onSelect"
+                                            @search="onSearch"
+                                            @change="onChange"
+                                            :style="{ border: '', marginLeft: 'auto' }"
+                                        >   
+                                            <a-input>
+                                                <a-button
+                                                    slot="suffix"
+                                                    style="margin-right: -12px"
+                                                    class="search-btn"
+                                                    size="medium"
+                                                    type="primary"
+                                                >
+                                                    <a-icon type="search" />
+                                                </a-button>
+                                            </a-input>
+                                        </a-auto-complete>
+                                    </form-item>
+                                </a-col>
+                            </a-row>
                         </form>
                     </span>
                 </a-col>
             </a-row>
             
-            <a-layout-content :style="{ margin: '12px 12px 0' }">
+            <a-layout-content :style="{ margin: '0 12px', border: '' }">
                 <div :style="{ background: '#fff' }">
 
-                    <div :style="{ background: '', padding: '12px', textAlign: 'center' }">
-                        <a-row :gutter="16" :style="{ margin: '12px 0' }">
-                            <a-col :span="8">
-                                <a-card hoverable style="width: 300px" @click="openProductDetails">
+                    <div :style="{ background: '', padding: '', textAlign: '' }">
+                        <a-row :gutter="16" :style="{ margin: '12px auto 0 auto', border: '' }">
+                            <a-col :span="8" :style="{ margin: '12px auto' }">
+                                <a-card hoverable style="width: 300px" @click="openProductDetails" :style="{ border: '' }">
                                     <img
                                         :style="{ width: '100%', height: '240px', border: '' }"
                                         slot="cover"
@@ -68,7 +88,7 @@
                                 </a-card>
                             </a-col>
 
-                            <a-col :span="8">
+                            <a-col :span="8" :style="{ margin: '12px auto' }">
                                 <a-card hoverable style="width: 300px" @click="openProductDetails">
                                     <img
                                         :style="{ width: '100%', height: '240px', border: '' }"
@@ -94,7 +114,7 @@
                                 </a-card>
                             </a-col>
 
-                            <a-col :span="8">
+                            <a-col :span="8" :style="{ margin: '12px auto' }">
                                 <a-card hoverable style="width: 300px" @click="openProductDetails">
                                     <img
                                         :style="{ width: '100%', height: '240px', border: '' }"
@@ -149,8 +169,8 @@
                 createBtnDisabled: true,
                 rating_value: 3,
                 search_string: "",
-                data_source: ["mango", "banana"],
-                search_source: ["mango", "banana"],
+                data_source: ["mango", "banana", "orange", "lemon", "lime"],
+                search_source: [],
             }
         },
 
