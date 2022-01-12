@@ -6,11 +6,11 @@
 
         <div v-if="!loading">
             <a-row :style="{ border: '', display: 'flex', margin: '' }">
-                <a-col :span="12" :style="{ border: '', padding: '12px' }">
+                <a-col :span="8" :style="{ border: '', padding: '12px' }">
                     <h1 :style="{ fontSize: '24px', margin: 'auto 0', border: '' }">Stock</h1>
                 </a-col>
 
-                <a-col :span="12" :style="{ border: '', padding: '12px', margin:'auto 0', diplay: 'flex' }">
+                <a-col :span="16" :style="{ border: '', padding: '12px', margin:'auto 0', display: 'flex' }">
                     <span :style="{ marginLeft: 'auto' }">
                         <a-form>
                             <a-row  :style="{ display: '' }">
@@ -29,7 +29,7 @@
                                         <a-auto-complete
                                             v-model="search_string"
                                             :data-source="search_source"
-                                            style="width: 200px"
+                                            style="width: 400px"
                                             placeholder="input here"
                                             @select="onSelect"
                                             @search="onSearch"
@@ -52,7 +52,7 @@
                                 </a-col>
 
                                 <a-col :span="8" :style="{ display: 'flex', marginLeft: 'auto', border: '', padding: '' }">
-                                    <a-button type="primary" :style="{ marginLeft: 'auto', border: '' }">create new</a-button>
+                                    <a-button type="primary" :style="{ marginLeft: 'auto', border: '' }">create stock</a-button>
                                 </a-col>
                             </a-row>
                         </a-form>

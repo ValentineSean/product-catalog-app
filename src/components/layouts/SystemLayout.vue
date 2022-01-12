@@ -25,7 +25,12 @@
             <span>Stock</span>
         </a-menu-item>
 
-        <a-menu-item key="4" @click="toUsers">
+        <a-menu-item key="4" @click="toCategories">
+            <a-icon type="cluster" />
+            <span>Categories</span>
+        </a-menu-item>
+
+        <a-menu-item key="5" @click="toUsers">
             <a-icon type="team" />
             <span>Users</span>
         </a-menu-item>
@@ -102,8 +107,12 @@
             this.$router.replace({ name: "Favorites" })
         },
 
-        toEmployees(){
-            this.$router.replace({ name: "Employees" })
+        toUsers(){
+            this.$router.replace({ name: "Users" })
+        },
+
+        toCategories(){
+            this.$router.replace({ name: "Categories" })
         },
 
         toPayrolls(){

@@ -11,6 +11,9 @@ import Products from "../components/products/Products.vue"
 import ProductDetails from "../components/products/ProductDetails.vue"
 import Stock from "../components/stock/Stock.vue"
 import Favorites from "../components/favorites/Favorites.vue"
+import SearchResults from "../components/products/SearchResults.vue"
+import Users from "../components/users/Users.vue"
+import Categories from "../components/categories/Categories.vue"
 
 // Vuex Store
 // import store from '../store/store';
@@ -21,7 +24,7 @@ const routes = [
         name: "Login",
         component: Login,
         meta: {
-        layout: BlankLayout,
+            layout: BlankLayout,
         }
     },
   
@@ -30,7 +33,7 @@ const routes = [
         name: "Products",
         component: Products,
         meta: {
-        layout: SystemLayout,
+            layout: SystemLayout,
         }
     },
 
@@ -48,7 +51,7 @@ const routes = [
         name: "Stock",
         component: Stock,
         meta: {
-        layout: SystemLayout,
+            layout: SystemLayout,
         }
     },
 
@@ -57,7 +60,34 @@ const routes = [
         name: "Favorites",
         component: Favorites,
         meta: {
-        layout: SystemLayout,
+            layout: SystemLayout,
+        }
+    },
+
+    {
+        path: "/search-results",
+        name: "Search Results",
+        component: SearchResults,
+        meta: {
+            layout: SystemLayout,
+        }
+    },
+
+    {
+        path: "/users",
+        name: "Users",
+        component: Users,
+        meta: {
+            layout: SystemLayout,
+        }
+    },
+
+    {
+        path: "/categories",
+        name: "Categories",
+        component: Categories,
+        meta: {
+            layout: SystemLayout,
         }
     },
 ]

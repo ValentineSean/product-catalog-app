@@ -17,8 +17,9 @@
                                     slot="extra"
                                     width="272"
                                     alt="logo"
-                                    src="http://res.cloudinary.com/dk8b24l10/image/upload/v1641908136/product-catalog/product_image_klmdi3.jpg"
+                                    src="http://res.cloudinary.com/dk8b24l10/image/upload/v1641954749/product-catalog/product_image_fiklox.jpg"
                                 />
+                                <!-- http://res.cloudinary.com/dk8b24l10/image/upload/v1641954749/product-catalog/product_image_fiklox.jpg -->
 
                                 <!-- <a-list-item-meta :description="item.description">
                                     <a slot="title" :href="item.href">{{ item.title }}</a>
@@ -27,8 +28,9 @@
                                 <a-list size="small">
                                     <a-list-item>Product name: Mouse100</a-list-item>
                                     <a-list-item>Category: Mouse</a-list-item>
-                                    <a-list-item>Supplier: Vale</a-list-item>
                                     <a-list-item>Stock available: 4</a-list-item>
+                                    <a-list-item>Supplier: Vale</a-list-item>
+                                    <a-list-item>Supplier contact number: 77700</a-list-item>
                                     <a-list-item>
                                         <span>Rating:</span>
                                         <a-rate v-if="!load_rating" v-model="rating_value" title="click to rate the product" @change="toRateProduct" />
