@@ -37,7 +37,7 @@
                                     <a-list-item>Supplier contact number: {{ product_details["supplier"]["contact_number"] }}</a-list-item>
                                     <a-list-item>
                                         <span>Rating:</span>
-                                        <a-rate v-if="!load_rating" v-model="product_details['rating']" title="click to rate the product" @change="toRateProduct(product_details)" />
+                                        <a-rate v-if="!load_rating" v-model="rating_value" title="click to rate the product" @change="toRateProduct(product_details)" />
                                         <a-spin v-if="load_rating" />
                                     </a-list-item>
                                 </a-list>
@@ -74,7 +74,7 @@
                 loading: false,
                 createBtnDisabled: true,
                 product_details: {},
-                rating_value: 3,
+                rating_value: 0,
                 load_rating: false,
 
                 // listData,
@@ -100,10 +100,13 @@
             //     this.$router.push({ name: "CreateProject" })
             // },
 
-            toRateProduct(product){
+            async toRateProduct(product){
                 this.load_rating = true
-                this.rateProduct(product).then((response) => {
+                product["rating"] = this.rating_value
+                await this.rateProduct(product).then((response) => {
                     if(response["status"] === "success"){
+                        // this.product_details = this.getProductDetails
+                        this.rating_value = this.getProductDetails["rating"]
                         this.$message.success(response["message"]);
                     }
                 
@@ -118,6 +121,7 @@
         async created(){
             this.loading = true
             this.product_details = [this.getProductDetails]
+            this.rating_value = this.getProductDetails["rating"]
             console.log(this.product_details)
             // await this.fetchAllCompanies().then((response) => {
             //     // if(response.status === "info"){

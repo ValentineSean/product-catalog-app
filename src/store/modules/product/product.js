@@ -2,11 +2,13 @@ import axios from "axios"
 
 const state = {
     products: [],
+    searched_products: [],
     product_details: {}
 }
 
 const getters = {
     getProducts: (state) => state.products,
+    getSearchedProducts: (state) => state.searched_products,
     getProductDetails: (state) => state.product_details,
 }
 
@@ -17,7 +19,7 @@ const actions = {
             
             if(response["data"]["status"] === "200"){
                 let products = response["data"]["data"]
-                console.log(products)
+                // console.log(products)
                 commit("setProducts", products)
 
                 return{
@@ -55,7 +57,7 @@ const actions = {
             
             if(response["data"]["status"] === "200"){
                 let products = response["data"]["data"]
-                // console.log(response["data"])
+                // console.log(products)
                 commit("setSearchedProducts", products)
 
                 return{
@@ -114,8 +116,8 @@ const actions = {
             
             if(response["data"]["status"] === "200"){
                 product = response["data"]["data"]
-                // console.log(response["data"]["data"])
-                commit("setRatedProduct", product)
+                // console.log(product)
+                commit("setRatedProduct", product[0])
 
                 return{
                     "status": "success",
@@ -201,6 +203,8 @@ const mutations = {
         if(index !== -1){
             state.products.splice(index, 1, product)
         }
+
+        state.product_details = product
     },
     // addProduct: (state, product) => (state.products.unshift(product[0])),
 }

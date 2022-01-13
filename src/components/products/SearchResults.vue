@@ -51,47 +51,18 @@
 
                     <div :style="{ background: '', padding: '', textAlign: '' }">
                         <a-row :gutter="16" :style="{ margin: '12px auto 0 auto', border: '' }">
-                            <a-col :span="8" :style="{ margin: '12px auto' }">
+                            <a-col :span="8" v-for="product in searched_products" :key="product['_id']" :style="{ margin: '12px auto' }">
                                 <a-card hoverable style="width: 300px" @click="openProductDetails" :style="{ border: '' }">
                                     <img
                                         :style="{ width: '100%', height: '240px', border: '' }"
                                         slot="cover"
                                         alt="example"
-                                        src="http://res.cloudinary.com/dk8b24l10/image/upload/v1641908136/product-catalog/product_image_klmdi3.jpg"
+                                        :src="product['image_url']"
                                     />
 
                                     <template slot="actions" class="ant-card-actions">
                                         <span :style="{ display: 'flex', border: '', padding: '0 24px' }">
-                                            <a-rate v-model="rating_value" disabled />
-                                            <!-- <a-icon key="edit" type="edit" /> -->
-                                            <a-icon
-                                                key="ellipsis"
-                                                type="heart"
-                                                title="add to your favorites"
-                                                v-on:click.stop="toFavorites"
-                                                theme="filled"
-                                                :style="{ fontSize: '24px', color: 'blue', marginLeft: 'auto' }"
-                                            />
-                                        </span>
-                                    </template>
-
-                                    <a-card-meta title="Mouse" description="Supplier: VSC">
-                                    </a-card-meta>
-                                </a-card>
-                            </a-col>
-
-                            <a-col :span="8" :style="{ margin: '12px auto' }">
-                                <a-card hoverable style="width: 300px" @click="openProductDetails">
-                                    <img
-                                        :style="{ width: '100%', height: '240px', border: '' }"
-                                        slot="cover"
-                                        alt="example"
-                                        src="http://res.cloudinary.com/dk8b24l10/image/upload/v1641908136/product-catalog/product_image_klmdi3.jpg"
-                                    />
-
-                                    <template slot="actions" class="ant-card-actions">
-                                        <span :style="{ display: 'flex', border: '', padding: '0 24px' }">
-                                            <a-rate v-model="rating_value" disabled />
+                                            <a-rate v-model="product['rating']" disabled />
                                             <!-- <a-icon key="edit" type="edit" /> -->
                                             <a-icon
                                                 key="ellipsis"
@@ -103,35 +74,7 @@
                                         </span>
                                     </template>
 
-                                    <a-card-meta title="Mouse" description="Supplier: VSC">
-                                    </a-card-meta>
-                                </a-card>
-                            </a-col>
-
-                            <a-col :span="8" :style="{ margin: '12px auto' }">
-                                <a-card hoverable style="width: 300px" @click="openProductDetails">
-                                    <img
-                                        :style="{ width: '100%', height: '240px', border: '' }"
-                                        slot="cover"
-                                        alt="example"
-                                        src="http://res.cloudinary.com/dk8b24l10/image/upload/v1641908136/product-catalog/product_image_klmdi3.jpg"
-                                    />
-
-                                    <template slot="actions" class="ant-card-actions">
-                                        <span :style="{ display: 'flex', border: '', padding: '0 24px' }">
-                                            <a-rate v-model="rating_value" disabled />
-                                            <!-- <a-icon key="edit" type="edit" /> -->
-                                            <a-icon
-                                                key="ellipsis"
-                                                type="heart"
-                                                title="add to your favorites"
-                                                v-on:click.stop="toFavorites"
-                                                :style="{ fontSize: '24px', color: 'blue', marginLeft: 'auto' }"
-                                            />
-                                        </span>
-                                    </template>
-
-                                    <a-card-meta title="Mouse" description="Supplier: VSC">
+                                    <a-card-meta :title="product['product_name']" :description="'Supplier: ' + product['supplier']['first_name'] + ' ' + product['supplier']['last_name']">
                                     </a-card-meta>
                                 </a-card>
                             </a-col>
@@ -144,7 +87,7 @@
 </template>
 
 <script>
-    // import { mapActions } from "vuex"
+    import { mapGetters } from "vuex"
 
     const searchAll = (items, term) =>{
         if(term){
@@ -163,6 +106,7 @@
             return{
                 loading: false,
                 createBtnDisabled: true,
+                searched_products: [],
                 rating_value: 3,
                 search_string: "",
                 data_source: ["mango", "banana", "orange", "lemon", "lime"],
@@ -207,6 +151,7 @@
 
         async created(){
             this.loading = true
+            this.searched_products = this.getSearchedProducts
             // await this.fetchAllCompanies().then((response) => {
             //     // if(response.status === "info"){
             //     //     this.$message.info(response.message);
@@ -256,5 +201,6 @@
         // },
 
         // computed: mapGetters(["getDashboard", "getActiveUser"])
+        computed: mapGetters(["getSearchedProducts"])
     }
 </script>

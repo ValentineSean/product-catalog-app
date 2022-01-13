@@ -219,7 +219,7 @@
 
         methods: {
             // ...mapActions(["fetchAllCompanies", "fetchAllDepartments"]),
-            ...mapActions(["fetchStock"]),
+            ...mapActions(["fetchStock", "fetchCategories"]),
 
             // openCreateSchedule(){
             //     this.$router.push({ name: "CreateProject" })
@@ -264,8 +264,26 @@
                 // }
                 
                 if(response.status === "success"){
-                    this.$message.success(response.message);
+                    // this.$message.success(response.message);
                     this.stock = this.getStock
+                }
+                
+                // else if(response.status === "warn"){
+                //     this.$message.warn(response.message);
+                // }
+                
+                if(response.status === "error"){
+                    this.$message.error(response.message);
+                }
+            })
+
+            await this.fetchCategories().then((response) => {
+                // if(response.status === "info"){
+                //     this.$message.info(response.message);
+                // }
+                
+                if(response.status === "success"){
+                    // this.$message.success(response.message);
                 }
                 
                 // else if(response.status === "warn"){

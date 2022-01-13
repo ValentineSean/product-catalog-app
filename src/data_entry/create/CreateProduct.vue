@@ -22,10 +22,8 @@
 
                 <a-col :span="12">
                     <a-form-item class="a-form-item" label="Category" :style="{ marginRight: '6px' }">
-                        <a-select v-model="category" placeholder="Category">
-                            <a-select-option value="61dd03372eec2bd87482e740">Mouse</a-select-option>
-                            <a-select-option value="61dd03372eec2bd87482e741">Keyboard</a-select-option>
-                            <a-select-option value="61dd03372eec2bd87482e742">Earphones</a-select-option>
+                        <a-select v-model="category_id" placeholder="Category">
+                            <a-select-option v-for="category in getCategories" :key="category['_id']['$oid']" :value="category['_id']['$oid']">{{ category['category_name'] }}</a-select-option>
                         </a-select>
                     </a-form-item>
                 </a-col>
@@ -84,7 +82,7 @@
   </div>
 </template>
 <script>
-    // import { mapActions, mapGetters } from "vuex"
+    import { mapActions, mapGetters } from "vuex"
     
     export default {
         name: "CreateProduct",
@@ -96,9 +94,10 @@
 
                 // Product details
                 product_name: "",
-                category: "",
+                category_id: "",
                 quantity_available: 0,
-                supplier: "61dd0130e4a7d4b89e277739",
+                unit_price: 0,
+                supplier: "61df5f9eaabc8e81b416507d",
                 product_image: null
                 // company: this.getActiveUser["company"],
             };
@@ -111,7 +110,7 @@
         emits: ["handleHide"],
 
         methods: {
-            // ...mapActions(["createProduct"]),
+            ...mapActions(["createProduct"]),
 
             // showModal() {
             //     this.visible = true;
@@ -125,33 +124,34 @@
             async saveProduct(){
                 this.createBtnLoading = true
 
-                // let product = {
-                //     product_name: this.product_name,
-                //     category: this.category,
-                //     quantity_available: this.quantity_available,
-                //     supplier: this.supplier,
-                //     product_image: this.product_image,
-                // }
+                let product = {
+                    product_name: this.product_name,
+                    category: this.category_id,
+                    quantity_available: this.quantity_available,
+                    unit_price: this.unit_price,
+                    supplier: this.supplier,
+                    product_image: this.product_image,
+                }
 
                 // console.log(product)
 
-                // await this.createProduct(product).then((response) => {
-                //     if(response.status === "info"){
-                //         this.$message.info(response.message);
-                //     }
+                await this.createProduct(product).then((response) => {
+                    // if(response.status === "info"){
+                    //     this.$message.info(response.message);
+                    // }
                     
-                //     else if(response.status === "success"){
-                //         this.$message.success(response.message);
-                //     }
+                    if(response.status === "success"){
+                        this.$message.success(response.message);
+                    }
                     
-                //     else if(response.status === "warn"){
-                //         this.$message.warn(response.message);
-                //     }
+                    // else if(response.status === "warn"){
+                    //     this.$message.warn(response.message);
+                    // }
                     
-                //     else if(response.status === "error"){
-                //         this.$message.error(response.message);
-                //     }
-                // })
+                    else if(response.status === "error"){
+                        this.$message.error(response.message);
+                    }
+                })
 
                 this.createBtnLoading = false
                 this.$emit('handleHide')
@@ -163,6 +163,6 @@
             },
         },
 
-        // computed: mapGetters(["getAllDepartments", "getActiveUser"]),
+        computed: mapGetters(["getCategories"]),
     };
 </script>

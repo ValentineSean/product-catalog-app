@@ -17,7 +17,7 @@
                             <a-row  :style="{ display: '' }">
                                 <a-col :span="12" :style="{ border: '' }">
                                     <form-item label="Search criteria">
-                                        <a-select placeholder="Search criteria">
+                                        <a-select v-model="search_criteria" @change="checkCriteria" placeholder="Search criteria">
                                             <a-select-option value="product">Product</a-select-option>
                                             <a-select-option value="category">Category</a-select-option>
                                             <a-select-option value="supplier">Supplier</a-select-option>
@@ -26,7 +26,7 @@
                                 </a-col>
 
                                 <a-col :span="12" :style="{ border: '', marginLeft: 'auto'}">
-                                    <form-item :style="{ display: 'flex', border: '', marginLeft: '24px' }">
+                                    <form-item :style="{ display: 'flex', border: '', marginLeft: '24px' }" label="Search string">
                                         <a-auto-complete
                                             v-model="search_string"
                                             :data-source="search_source"
@@ -80,7 +80,6 @@
                                                 type="heart"
                                                 title="add to your favorites"
                                                 v-on:click.stop="toFavorites"
-                                                :theme="non_filled"
                                                 :style="{ fontSize: '24px', color: 'blue', marginLeft: 'auto' }"
                                                 v-if="!load_favorite"
                                             />
@@ -157,11 +156,25 @@
 <script>
     import { mapActions, mapGetters } from "vuex"
 
-    const searchAll = (items, term) =>{
+    const searchAll = (items, term, criteria) =>{
         if(term){
-            return items.filter(item =>
-                ((item !== undefined && item !== null) && item.toLowerCase().includes(term.toLowerCase()))
-            )
+            if(criteria === "product"){
+                return items.filter(item => 
+                    ((item !== undefined && item !== null) && item.toLowerCase().includes(term.toLowerCase()))
+                )
+            }
+
+            if(criteria === "category"){
+                return items.filter(item =>
+                    ((item !== undefined && item !== null) && item.toLowerCase().includes(term.toLowerCase()))
+                )
+            }
+
+            if(criteria === "supplier"){
+                return items.filter(item =>
+                    ((item !== undefined && item !== null) && item.toLowerCase().includes(term.toLowerCase()))
+                )
+            }
         }
 
         return items
@@ -175,6 +188,7 @@
                 loading: false,
                 load_favorite: false,
                 createBtnDisabled: true,
+                search_criteria: "",
                 filled: "filled",
                 non_filled: "",
                 products: [],
@@ -193,7 +207,7 @@
 
         methods: {
             // ...mapActions(["fetchAllCompanies", "fetchAllDepartments"]),
-            ...mapActions(["fetchProducts", "refreshProductDetails"]),
+            ...mapActions(["fetchProducts", "refreshProductDetails", "fetchUsers", "fetchCategories", "searchProducts"]),
 
             // openCreateSchedule(){
             //     this.$router.push({ name: "CreateProject" })
@@ -216,9 +230,43 @@
                 console.log("To favorites")
             },
 
+            checkCriteria(){
+                this.data_source = null
+                this.search_string = ""
+                
+                if(this.search_criteria === "product"){
+                    let search_products = []
+                    for(let product of this.products){
+                        search_products.push(product["product_name"])
+                    }
+
+                    this.data_source = search_products
+                }
+
+                else if(this.search_criteria === "category"){
+                    let search_categories = []
+                    for(let category of this.getCategories){
+                        search_categories.push(category["category_name"])
+                    }
+
+                    this.data_source = search_categories
+                }
+
+                else if(this.search_criteria === "supplier"){
+                    let search_suppliers = []
+                    for(let supplier of this.getSuppliers){
+                        search_suppliers.push(supplier["first_name"])
+                    }
+
+                    this.data_source = search_suppliers
+                }
+
+                console.log(this.data_source)
+            },
+
             onSearch(search_text) {
                 // this.search_source = !search_text ? [] : [search_text, search_text.repeat(2), search_text.repeat(3)];
-                this.search_source = searchAll(this.data_source, search_text)
+                this.search_source = searchAll(this.data_source, search_text, this.search_criteria)
             },
 
             onSelect(value) {
@@ -229,8 +277,30 @@
                 console.log('onChange', value);
             },
 
-            toSearchProducts(){
-                this.$router.push({ name: "Search Results" })
+            async toSearchProducts(){
+                this.loading = true
+
+                let search_product = {
+                    search_criteria: this.search_criteria,
+                    search_string: this.search_string
+                }
+
+                await this.searchProducts(search_product).then((response) => {
+                    if(response.status === "success"){
+                        // this.products = this.getProducts
+                        this.$router.push({ name: "Search Results" })
+                    }
+                    
+                    // else if(response.status === "warn"){
+                    //     this.$message.warn(response.message);
+                    // }
+                    
+                    if(response.status === "error"){
+                        this.$message.error(response.message);
+                    }
+                })
+
+                this.loading = false
             }
         },
 
@@ -242,8 +312,43 @@
                 // }
                 
                 if(response.status === "success"){
-                    this.$message.success(response.message);
                     this.products = this.getProducts
+                }
+                
+                // else if(response.status === "warn"){
+                //     this.$message.warn(response.message);
+                // }
+                
+                else if(response.status === "error"){
+                    this.$message.error(response.message);
+                }
+            })
+
+            await this.fetchCategories().then((response) => {
+                // if(response.status === "info"){
+                //     this.$message.info(response.message);
+                // }
+                
+                if(response.status === "success"){
+                    // this.$message.success(response.message);
+                }
+                
+                // else if(response.status === "warn"){
+                //     this.$message.warn(response.message);
+                // }
+                
+                if(response.status === "error"){
+                    this.$message.error(response.message);
+                }
+            })
+
+            await this.fetchUsers().then((response) => {
+                // if(response.status === "info"){
+                //     this.$message.info(response.message);
+                // }
+                
+                if(response.status === "success"){
+                    this.$message.success("Products are ready");
                 }
                 
                 // else if(response.status === "warn"){
@@ -286,6 +391,6 @@
         // },
 
         // computed: mapGetters(["getDashboard", "getActiveUser"])
-        computed: mapGetters(["getProducts"])
+        computed: mapGetters(["getProducts", "getSuppliers", "getCategories"])
     }
 </script>

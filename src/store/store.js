@@ -6,6 +6,8 @@ import VuexPersistence from 'vuex-persist';
 // import auth from './modules/auth/auth';
 import product from './modules/product/product';
 import supplier from './modules/supplier/supplier';
+import user from './modules/user/user';
+import category from './modules/category/category';
 
 Vue.use(Vuex);
 
@@ -18,6 +20,8 @@ const store = new Vuex.Store({
         // auth,
         product,
         supplier,
+        user,
+        category,
     },
 
     plugins: [vuexLocal.plugin],
