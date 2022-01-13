@@ -15,7 +15,7 @@ import "ant-design-vue/dist/antd.css"
 
 // require("./store/subscribe");
 
-axios.defaults.baseURL = "localhost:5000";
+axios.defaults.baseURL = "http://localhost:5000";
 
 // store.dispatch('attempt', sessionStorage.getItem('token'));
 

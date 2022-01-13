@@ -63,19 +63,18 @@
 
                     <div :style="{ background: '', padding: '', textAlign: '' }">
                         <a-row :gutter="16" :style="{ margin: '12px auto 0 auto', border: '' }">
-                            <a-col :span="8" :style="{ margin: '12px auto' }">
+                            <a-col :span="8" v-for="product in products" :key="product['_id']" :style="{ margin: '12px auto' }">
                                 <a-card hoverable style="width: 300px" @click="openProductDetails" :style="{ border: '' }">
                                     <img
                                         :style="{ width: '100%', height: '240px', border: '' }"
                                         slot="cover"
                                         alt="example"
-                                        src="http://res.cloudinary.com/dk8b24l10/image/upload/v1641908136/product-catalog/product_image_klmdi3.jpg"
+                                        :src="product['image_url']"
                                     />
 
                                     <template slot="actions" class="ant-card-actions">
                                         <span :style="{ display: 'flex', border: '', padding: '0 24px' }">
                                             <a-rate v-model="rating_value" disabled />
-                                            <!-- <a-icon key="edit" type="edit" /> -->
                                             <a-icon
                                                 key="ellipsis"
                                                 type="heart"
@@ -87,12 +86,12 @@
                                         </span>
                                     </template>
 
-                                    <a-card-meta title="Mouse" description="Supplier: VSC">
+                                    <a-card-meta :title="product['product_name']" :description="'Supplier: ' + product['supplier']['first_name'] + ' ' + product['supplier']['last_name']">
                                     </a-card-meta>
                                 </a-card>
                             </a-col>
 
-                            <a-col :span="8" :style="{ margin: '12px auto' }">
+                            <!-- <a-col :span="8" :style="{ margin: '12px auto' }">
                                 <a-card hoverable style="width: 300px" @click="openProductDetails">
                                     <img
                                         :style="{ width: '100%', height: '240px', border: '' }"
@@ -104,7 +103,6 @@
                                     <template slot="actions" class="ant-card-actions">
                                         <span :style="{ display: 'flex', border: '', padding: '0 24px' }">
                                             <a-rate v-model="rating_value" disabled />
-                                            <!-- <a-icon key="edit" type="edit" /> -->
                                             <a-icon
                                                 key="ellipsis"
                                                 type="heart"
@@ -132,7 +130,6 @@
                                     <template slot="actions" class="ant-card-actions">
                                         <span :style="{ display: 'flex', border: '', padding: '0 24px' }">
                                             <a-rate v-model="rating_value" disabled />
-                                            <!-- <a-icon key="edit" type="edit" /> -->
                                             <a-icon
                                                 key="ellipsis"
                                                 type="heart"
@@ -146,7 +143,7 @@
                                     <a-card-meta title="Mouse" description="Supplier: VSC">
                                     </a-card-meta>
                                 </a-card>
-                            </a-col>
+                            </a-col> -->
                         </a-row>
                     </div>
                 </div>
@@ -156,7 +153,7 @@
 </template>
 
 <script>
-    // import { mapActions } from "vuex"
+    import { mapActions, mapGetters } from "vuex"
 
     const searchAll = (items, term) =>{
         if(term){
@@ -175,6 +172,7 @@
             return{
                 loading: false,
                 createBtnDisabled: true,
+                products: [],
                 rating_value: 4,
                 search_string: "",
                 data_source: ["mango", "banana", "orange", "lemon", "lime"],
@@ -190,6 +188,7 @@
 
         methods: {
             // ...mapActions(["fetchAllCompanies", "fetchAllDepartments"]),
+            ...mapActions(["fetchProducts"]),
 
             // openCreateSchedule(){
             //     this.$router.push({ name: "CreateProject" })
@@ -223,23 +222,24 @@
 
         async created(){
             this.loading = true
-            // await this.fetchAllCompanies().then((response) => {
-            //     // if(response.status === "info"){
-            //     //     this.$message.info(response.message);
-            //     // }
+            await this.fetchProducts().then((response) => {
+                // if(response.status === "info"){
+                //     this.$message.info(response.message);
+                // }
                 
-            //     // else if(response.status === "success"){
-            //     //     this.$message.success(response.message);
-            //     // }
+                if(response.status === "success"){
+                    this.$message.success(response.message);
+                    this.products = this.getProducts
+                }
                 
-            //     // else if(response.status === "warn"){
-            //     //     this.$message.warn(response.message);
-            //     // }
+                // else if(response.status === "warn"){
+                //     this.$message.warn(response.message);
+                // }
                 
-            //     if(response.status === "error"){
-            //         this.$message.error(response.message);
-            //     }
-            // })
+                if(response.status === "error"){
+                    this.$message.error(response.message);
+                }
+            })
 
             // await this.fetchAllDepartments().then((response) => {
             //     // if(response.status === "info"){
@@ -272,5 +272,6 @@
         // },
 
         // computed: mapGetters(["getDashboard", "getActiveUser"])
+        computed: mapGetters(["getProducts"])
     }
 </script>
