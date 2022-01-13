@@ -6,27 +6,27 @@
         </div>
 
         <div v-if="!loading">
-            <a-row :style="{ border: '', display: 'flex', margin: '' }">
-                <a-col :span="12" :style="{ border: '', padding: '12px' }">
+            <a-row :style="{ border: '', display: '', margin: '' }">
+                <a-col :span="8" :style="{ border: '', padding: '12px' }">
                     <h1 :style="{ fontSize: '24px', margin: 'auto 0', border: '' }">Products</h1>
                 </a-col>
 
-                <a-col :span="12" :style="{ border: '', padding: '12px', margin:'auto 0', display: 'flex' }">
-                    <span :style="{ marginLeft: 'auto' }">
+                <a-col :span="12" :style="{ border: '', padding: '12px', margin:'auto 0', display: '' }">
+                    <span :style="{ marginLeft: '' }">
                         <a-form>
                             <a-row  :style="{ display: '' }">
                                 <a-col :span="12" :style="{ border: '' }">
-                                    <form-item label="Search criteria">
+                                    <a-form-item label="Search criteria">
                                         <a-select v-model="search_criteria" @change="checkCriteria" placeholder="Search criteria">
                                             <a-select-option value="product">Product</a-select-option>
                                             <a-select-option value="category">Category</a-select-option>
                                             <a-select-option value="supplier">Supplier</a-select-option>
                                         </a-select>
-                                    </form-item>
+                                    </a-form-item>
                                 </a-col>
 
-                                <a-col :span="12" :style="{ border: '', marginLeft: 'auto'}">
-                                    <form-item :style="{ display: 'flex', border: '', marginLeft: '24px' }" label="Search string">
+                                <a-col :span="12" :style="{ border: '', marginLeft: '', overflow: ''}">
+                                    <a-form-item label="Search string" :style="{ display: '', border: '', marginLeft: '24px', width: '90px !important' }">
                                         <a-auto-complete
                                             v-model="search_string"
                                             :data-source="search_source"
@@ -35,7 +35,7 @@
                                             @select="onSelect"
                                             @search="onSearch"
                                             @change="onChange"
-                                            :style="{ border: '', marginLeft: 'auto' }"
+                                            :style="{ border: '', marginLeft: '' }"
                                         >   
                                             <a-input>
                                                 <a-button
@@ -50,7 +50,7 @@
                                                 </a-button>
                                             </a-input>
                                         </a-auto-complete>
-                                    </form-item>
+                                    </a-form-item>
                                 </a-col>
                             </a-row>
                         </a-form>

@@ -15,18 +15,9 @@
                     <span :style="{ marginLeft: 'auto' }">
                         <a-form>
                             <a-row  :style="{ display: 'flex', border: '' }">
-                                <!-- <a-col :span="12" :style="{ border: '' }">
-                                    <form-item label="Search criteria">
-                                        <a-select placeholder="Search criteria">
-                                            <a-select-option value="product">Product</a-select-option>
-                                            <a-select-option value="category">Category</a-select-option>
-                                            <a-select-option value="supplier">Supplier</a-select-option>
-                                        </a-select>
-                                    </form-item>
-                                </a-col> -->
 
                                 <a-col :span="12" :style="{ border: '', marginLeft: 'auto'}">
-                                    <form-item :style="{ display: 'flex', border: '', marginLeft: '24px' }">
+                                    <a-form-item label="Filter" :style="{ display: 'flex', border: '', marginLeft: '24px' }">
                                         <a-input
                                             v-model="filter_string"
                                             placeholder="filter..."
@@ -35,7 +26,7 @@
                                         >
                                         <a-icon type="filter" slot="suffix"></a-icon>
                                         </a-input>
-                                    </form-item>
+                                    </a-form-item>
                                 </a-col>
                             </a-row>
                         </a-form>
