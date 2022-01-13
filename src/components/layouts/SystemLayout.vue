@@ -53,8 +53,6 @@
             <a-dropdown :trigger="['click']">
               <span class="ant-drop-down-link" :style="{ cursor: 'pointer' }">
                 {{ getActiveUser["first_name"] }} {{ getActiveUser["last_name"] }}
-                <!-- {{ getActiveUser["email"] }} -->
-                <!-- John Doe -->
                 <a-icon type="caret-down" style="color: rgba(0,0,0,.25)" />
               </span>
 
@@ -93,14 +91,10 @@
       return {
         loading: false,
         collapsed: false,
-        // default_tab: null,
-        // default_sub_tab: null,
       };
     },
 
     methods: {
-        // ...mapActions(["fetchDepartments", "fetchRoles", "fetchUsers", "fetchFeeds", "activate"]),
-        // ...mapActions(["logoutUser"]),
 
         toProducts(){
             this.$router.replace({ name: "Products" })
@@ -124,13 +118,7 @@
 
         // LOGOUT
         async logout(){
-          // this.loading = true
-          // this.logoutUser(false)
-          // window.sessionStorage.removeItem('vuex');
-          // window.sessionStorage.clear()
           this.$router.replace({ name: 'Login' });
-          // this.$message.info("You have successfully logged out")
-          // this.loading = false
         }
     },
 

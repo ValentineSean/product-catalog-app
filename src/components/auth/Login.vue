@@ -38,12 +38,6 @@
                                 </a-button>
                                 
                             </a-form-item>
-
-                            <!-- <a-form-item :style="{ textAlign: 'center' }">
-                                <a-button type="default" :style="{ width: '50%', margin: 'auto' }">
-                                    Register
-                                </a-button>
-                            </a-form-item> -->
                         </a-form>
                     </a-col>
                 </a-row>
@@ -54,7 +48,6 @@
 
 <script>
     import { mapActions, mapGetters } from "vuex"
-    // import { mapActions } from "vuex"
 
     export default {
         name: "Login",
@@ -106,14 +99,6 @@
 
                 this.loginBtnLoading = false
             },
-        },
-
-        created(){
-            // console.log(this.getLoggedIn)
-            // if(this.getLoggedIn){
-            //     console.log(this.getLoggedIn)
-            //     this.$router.replace({ name: "Dashboard" })
-            // }
         },
 
         computed: mapGetters(["getActiveUser"])

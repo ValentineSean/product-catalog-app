@@ -23,13 +23,11 @@ const actions = {
                 let token = response["data"]["token"]
                 let active_user = jwt_decode(token)
                 active_user = active_user["sub"]
-                // console.log(stock)
                 commit("setActiveUser", active_user)
 
                 return{
                     "status": "success",
                     "message": "Login successfully",
-                    // "data": user
                 }
             }
 
@@ -42,7 +40,6 @@ const actions = {
         }
 
         catch(error){
-            // console.log(error)
             return{
                 "status": "error",
                 "message": "Server technical problem"

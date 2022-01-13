@@ -1,7 +1,6 @@
 <template>
     <div>
         <div class="loading-spinner" v-if="loading">
-            <!-- <a-spin /> -->
             <a-skeleton active />
         </div>
 
@@ -75,14 +74,6 @@
                                     <template slot="actions" class="ant-card-actions">
                                         <span :style="{ display: 'flex', border: '', padding: '0 24px' }">
                                             <a-rate v-model="product['rating']" disabled />
-                                            <!-- <a-icon
-                                                key="ellipsis"
-                                                type="heart"
-                                                title="add to your favorites"
-                                                v-on:click.stop="toFavorites"
-                                                :style="{ fontSize: '24px', color: 'blue', marginLeft: 'auto' }"
-                                                v-if="!load_favorite"
-                                            /> -->
                                             <a-spin v-if="load_favorite" :style="{ fontSize: '24px', color: 'red', marginLeft: 'auto' }" />
                                         </span>
                                     </template>
@@ -91,60 +82,6 @@
                                     </a-card-meta>
                                 </a-card>
                             </a-col>
-
-                            <!-- <a-col :span="8" :style="{ margin: '12px auto' }">
-                                <a-card hoverable style="width: 300px" @click="openProductDetails">
-                                    <img
-                                        :style="{ width: '100%', height: '240px', border: '' }"
-                                        slot="cover"
-                                        alt="example"
-                                        src="http://res.cloudinary.com/dk8b24l10/image/upload/v1641908136/product-catalog/product_image_klmdi3.jpg"
-                                    />
-
-                                    <template slot="actions" class="ant-card-actions">
-                                        <span :style="{ display: 'flex', border: '', padding: '0 24px' }">
-                                            <a-rate v-model="rating_value" disabled />
-                                            <a-icon
-                                                key="ellipsis"
-                                                type="heart"
-                                                title="add to your favorites"
-                                                v-on:click.stop="toFavorites"
-                                                :style="{ fontSize: '24px', color: 'blue', marginLeft: 'auto' }"
-                                            />
-                                        </span>
-                                    </template>
-
-                                    <a-card-meta title="Mouse" description="Supplier: VSC">
-                                    </a-card-meta>
-                                </a-card>
-                            </a-col>
-
-                            <a-col :span="8" :style="{ margin: '12px auto' }">
-                                <a-card hoverable style="width: 300px" @click="openProductDetails">
-                                    <img
-                                        :style="{ width: '100%', height: '240px', border: '' }"
-                                        slot="cover"
-                                        alt="example"
-                                        src="http://res.cloudinary.com/dk8b24l10/image/upload/v1641908136/product-catalog/product_image_klmdi3.jpg"
-                                    />
-
-                                    <template slot="actions" class="ant-card-actions">
-                                        <span :style="{ display: 'flex', border: '', padding: '0 24px' }">
-                                            <a-rate v-model="rating_value" disabled />
-                                            <a-icon
-                                                key="ellipsis"
-                                                type="heart"
-                                                title="add to your favorites"
-                                                v-on:click.stop="toFavorites"
-                                                :style="{ fontSize: '24px', color: 'blue', marginLeft: 'auto' }"
-                                            />
-                                        </span>
-                                    </template>
-
-                                    <a-card-meta title="Mouse" description="Supplier: VSC">
-                                    </a-card-meta>
-                                </a-card>
-                            </a-col> -->
                         </a-row>
                     </div>
                 </div>
@@ -206,17 +143,11 @@
         },
 
         methods: {
-            // ...mapActions(["fetchAllCompanies", "fetchAllDepartments"]),
             ...mapActions(["fetchProducts", "refreshProductDetails", "fetchUsers", "fetchCategories", "searchProducts"]),
-
-            // openCreateSchedule(){
-            //     this.$router.push({ name: "CreateProject" })
-            // },
 
             openProductDetails(product){
                 this.refreshProductDetails(product).then((response) => {
                     if(response.status === "success"){
-                        // this.$message.success(response.message);
                         this.$router.push({ name: "Product Details" })
                     }
 
@@ -265,7 +196,6 @@
             },
 
             onSearch(search_text) {
-                // this.search_source = !search_text ? [] : [search_text, search_text.repeat(2), search_text.repeat(3)];
                 this.search_source = searchAll(this.data_source, search_text, this.search_criteria)
             },
 
@@ -287,13 +217,8 @@
 
                 await this.searchProducts(search_product).then((response) => {
                     if(response.status === "success"){
-                        // this.products = this.getProducts
                         this.$router.push({ name: "Search Results" })
                     }
-                    
-                    // else if(response.status === "warn"){
-                    //     this.$message.warn(response.message);
-                    // }
                     
                     if(response.status === "error"){
                         this.$message.error(response.message);
@@ -307,17 +232,10 @@
         async created(){
             this.loading = true
             await this.fetchProducts().then((response) => {
-                // if(response.status === "info"){
-                //     this.$message.info(response.message);
-                // }
                 
                 if(response.status === "success"){
                     this.products = this.getProducts
                 }
-                
-                // else if(response.status === "warn"){
-                //     this.$message.warn(response.message);
-                // }
                 
                 else if(response.status === "error"){
                     this.$message.error(response.message);
@@ -325,17 +243,10 @@
             })
 
             await this.fetchCategories().then((response) => {
-                // if(response.status === "info"){
-                //     this.$message.info(response.message);
-                // }
                 
                 if(response.status === "success"){
                     // this.$message.success(response.message);
                 }
-                
-                // else if(response.status === "warn"){
-                //     this.$message.warn(response.message);
-                // }
                 
                 if(response.status === "error"){
                     this.$message.error(response.message);
@@ -343,54 +254,19 @@
             })
 
             await this.fetchUsers().then((response) => {
-                // if(response.status === "info"){
-                //     this.$message.info(response.message);
-                // }
                 
                 if(response.status === "success"){
                     this.$message.success("Products are ready");
                 }
-                
-                // else if(response.status === "warn"){
-                //     this.$message.warn(response.message);
-                // }
                 
                 if(response.status === "error"){
                     this.$message.error(response.message);
                 }
             })
 
-            // await this.fetchAllDepartments().then((response) => {
-            //     // if(response.status === "info"){
-            //     //     this.$message.info(response.message);
-            //     // }
-                
-            //     // else if(response.status === "success"){
-            //     //     this.$message.success(response.message);
-            //     // }
-                
-            //     // else if(response.status === "warn"){
-            //     //     this.$message.warn(response.message);
-            //     // }
-                
-            //     if(response.status === "error"){
-            //         this.$message.error(response.message);
-            //     }
-            // })
             this.loading = false
         },
 
-        // mounted(){
-        //     if(this.getActiveUser["role"]["role_name"].toLowerCase() === "manager"){
-        //         this.createBtnDisabled = false
-        //     }
-
-        //     else{
-        //         this.createBtnDisabled = true
-        //     }
-        // },
-
-        // computed: mapGetters(["getDashboard", "getActiveUser"])
         computed: mapGetters(["getProducts", "getSuppliers", "getCategories"])
     }
 </script>

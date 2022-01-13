@@ -1,8 +1,5 @@
 import axios from "axios"
 
-// State Modules
-// import product from "../product/product"
-
 const state = {
     stock: []
 }
@@ -18,7 +15,7 @@ const actions = {
             
             if(response["data"]["status"] === "200"){
                 let stock = response["data"]["data"]
-                // console.log(stock)
+                
                 commit("setStock", stock)
 
                 return{
@@ -39,7 +36,6 @@ const actions = {
         }
 
         catch(error){
-            // console.log(error)
             return{
                 "status": "error",
                 "message": "Server technical problem"
@@ -68,7 +64,6 @@ const actions = {
             
             if(response["data"]["status"] === "200"){
                 product = response["data"]["data"]
-                // console.log(response["data"]["data"])
                 commit("addProduct", product)
 
                 return{
@@ -78,7 +73,6 @@ const actions = {
             }
 
             else{
-                // commit("addProduct", [])
 
                 return{
                     "status": "error",
@@ -88,7 +82,6 @@ const actions = {
         }
         
         catch(error){
-            // console.log(error)
             return{
                 "status": "error",
                 "message": "Server technical problem"

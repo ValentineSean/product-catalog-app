@@ -1,7 +1,6 @@
 <template>
     <div>
         <div class="loading-spinner" v-if="loading">
-            <!-- <a-spin /> -->
             <a-skeleton active />
         </div>
 
@@ -51,14 +50,6 @@
                                     <template slot="actions" class="ant-card-actions">
                                         <span :style="{ display: 'flex', border: '', padding: '0 24px' }">
                                             <a-rate v-model="product['rating']" disabled />
-                                            <!-- <a-icon key="edit" type="edit" /> -->
-                                            <!-- <a-icon
-                                                key="ellipsis"
-                                                type="heart"
-                                                title="add to your favorites"
-                                                v-on:click.stop="toFavorites"
-                                                :style="{ fontSize: '24px', color: 'blue', marginLeft: 'auto' }"
-                                            /> -->
                                         </span>
                                     </template>
 
@@ -112,14 +103,9 @@
         methods: {
             ...mapActions(["refreshProductDetails"]),
 
-            // openCreateSchedule(){
-            //     this.$router.push({ name: "CreateProject" })
-            // },
-
             openProductDetails(product){
                 this.refreshProductDetails(product).then((response) => {
                     if(response.status === "success"){
-                        // this.$message.success(response.message);
                         this.$router.push({ name: "Product Details" })
                     }
 
@@ -133,10 +119,6 @@
                 console.log("To favorites")
             },
 
-            // onSearch(search_text) {
-            //     this.search_source = searchAll(this.searched_products, search_text)
-            // },
-
             filterResults(){
                 this.search_source = searchAll(this.searched_products, this.filter_string)
             }
@@ -146,55 +128,8 @@
             this.loading = true
             this.searched_products = this.getSearchedProducts
             this.search_source = this.searched_products
-            // await this.fetchAllCompanies().then((response) => {
-            //     // if(response.status === "info"){
-            //     //     this.$message.info(response.message);
-            //     // }
-                
-            //     // else if(response.status === "success"){
-            //     //     this.$message.success(response.message);
-            //     // }
-                
-            //     // else if(response.status === "warn"){
-            //     //     this.$message.warn(response.message);
-            //     // }
-                
-            //     if(response.status === "error"){
-            //         this.$message.error(response.message);
-            //     }
-            // })
-
-            // await this.fetchAllDepartments().then((response) => {
-            //     // if(response.status === "info"){
-            //     //     this.$message.info(response.message);
-            //     // }
-                
-            //     // else if(response.status === "success"){
-            //     //     this.$message.success(response.message);
-            //     // }
-                
-            //     // else if(response.status === "warn"){
-            //     //     this.$message.warn(response.message);
-            //     // }
-                
-            //     if(response.status === "error"){
-            //         this.$message.error(response.message);
-            //     }
-            // })
             this.loading = false
         },
-
-        // mounted(){
-        //     if(this.getActiveUser["role"]["role_name"].toLowerCase() === "manager"){
-        //         this.createBtnDisabled = false
-        //     }
-
-        //     else{
-        //         this.createBtnDisabled = true
-        //     }
-        // },
-
-        // computed: mapGetters(["getDashboard", "getActiveUser"])
         computed: mapGetters(["getSearchedProducts"])
     }
 </script>
