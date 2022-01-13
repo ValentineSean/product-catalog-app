@@ -29,6 +29,7 @@
                                     <a-list-item>Product name: Mouse100</a-list-item>
                                     <a-list-item>Category: Mouse</a-list-item>
                                     <a-list-item>Stock available: 4</a-list-item>
+                                    <a-list-item>Unit Price: $400</a-list-item>
                                     <a-list-item>Supplier: Vale</a-list-item>
                                     <a-list-item>Supplier contact number: 77700</a-list-item>
                                     <a-list-item>

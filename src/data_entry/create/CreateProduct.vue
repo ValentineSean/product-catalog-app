@@ -24,8 +24,8 @@
                     <a-form-item class="a-form-item" label="Category" :style="{ marginRight: '6px' }">
                         <a-select v-model="category" placeholder="Category">
                             <a-select-option value="61dd03372eec2bd87482e740">Mouse</a-select-option>
-                            <a-select-option value="61dd03372eec2bd87482e740">Keyboard</a-select-option>
-                            <a-select-option value="61dd03372eec2bd87482e740">Earphones</a-select-option>
+                            <a-select-option value="61dd03372eec2bd87482e741">Keyboard</a-select-option>
+                            <a-select-option value="61dd03372eec2bd87482e742">Earphones</a-select-option>
                         </a-select>
                     </a-form-item>
                 </a-col>
@@ -43,6 +43,18 @@
                 </a-col>
 
                 <a-col :span="12">
+                    <a-form-item class="a-form-item" label="Unit Price ($)" :style="{ marginRight: '6px' }">
+                        <a-input
+                            type="number"
+                            v-model="unit_price"
+                            placeholder="Unit Price ($)"
+                        />
+                    </a-form-item>
+                </a-col>
+            </a-row>
+
+            <a-row>
+                <a-col :span="24">
                     <a-form-item class="a-form-item" label="Product Image" :style="{ marginRight: '6px' }">
                         <a-input
                             type="file"

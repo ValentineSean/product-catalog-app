@@ -1,7 +1,7 @@
 <template>
   <div>
-    <!-- <CreateEmployee @handleHide="hideCreateEmployee" :createEmployeeVisible="createEmployeeVisible" />
-    <UpdateEmployee :employee="employee" @handleHide="hideUpdateEmployee" :updateEmployeeVisible="updateEmployeeVisible" /> -->
+    <CreateUser @handleHide="hideCreateUser" :createUserVisible="createUserVisible" />
+    <!-- <UpdateEmployee :employee="employee" @handleHide="hideUpdateEmployee" :updateEmployeeVisible="updateEmployeeVisible" /> -->
 
     <div class="loading-spinner" v-if="loading">
       <a-spin />
@@ -14,7 +14,7 @@
             </a-col>
 
             <a-col :span="12" :style="{ border: '', padding: '12px', margin:'', display: 'flex' }">
-                <a-button @click.prevent="openCreateCategory" type="primary" icon="plus" :style="{ margin: 'auto 0 auto auto', border: '' }">
+                <a-button @click.prevent="openCreateUser" type="primary" icon="plus" :style="{ margin: 'auto 0 auto auto', border: '' }">
                     Create User
                 </a-button>
             </a-col>
@@ -157,7 +157,7 @@
 
 <script>
 //   import { mapActions, mapGetters } from "vuex"
-//   import CreateEmployee from "../../data_entry/create/CreateEmployee"
+  import CreateUser from "../../data_entry/create/CreateUser"
 //   import UpdateEmployee from "../../data_entry/update/UpdateEmployee"
 
   const allUsers = [
@@ -196,7 +196,7 @@
     name: "Users",
 
     components: {
-    //   CreateEmployee,
+      CreateUser,
     //   UpdateEmployee,
     },
 
