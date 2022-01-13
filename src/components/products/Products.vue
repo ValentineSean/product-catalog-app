@@ -194,7 +194,7 @@
                 products: [],
                 rating_value: 4,
                 search_string: "",
-                data_source: ["mango", "banana", "orange", "lemon", "lime"],
+                data_source: [],
                 search_source: [],
             }
         },

@@ -8,7 +8,7 @@
         <div v-if="!loading">
             <a-row :style="{ border: '', display: 'flex', margin: '' }">
                 <a-col :span="12" :style="{ border: '', padding: '12px' }">
-                    <h1 :style="{ fontSize: '24px', margin: 'auto 0', border: '' }">Search results by "product"</h1>
+                    <h1 :style="{ fontSize: '24px', margin: 'auto 0', border: '' }">Search results</h1>
                 </a-col>
 
                 <a-col :span="12" :style="{ border: '', padding: '12px', margin:'auto 0', diplay: 'flex' }">
@@ -27,17 +27,14 @@
 
                                 <a-col :span="12" :style="{ border: '', marginLeft: 'auto'}">
                                     <form-item :style="{ display: 'flex', border: '', marginLeft: '24px' }">
-                                        <a-auto-complete
-                                            v-model="search_string"
-                                            :data-source="search_source"
-                                            style="width: 200px"
+                                        <a-input
+                                            v-model="filter_string"
                                             placeholder="filter..."
-                                            @select="onSelect"
-                                            @search="onSearch"
-                                            @change="onChange"
                                             :style="{ border: '', marginLeft: 'auto' }"
+                                            @input="filterResults"
                                         >
-                                        </a-auto-complete>
+                                        <a-icon type="filter" slot="suffix"></a-icon>
+                                        </a-input>
                                     </form-item>
                                 </a-col>
                             </a-row>
@@ -51,7 +48,7 @@
 
                     <div :style="{ background: '', padding: '', textAlign: '' }">
                         <a-row :gutter="16" :style="{ margin: '12px auto 0 auto', border: '' }">
-                            <a-col :span="8" v-for="product in searched_products" :key="product['_id']" :style="{ margin: '12px auto' }">
+                            <a-col :span="8" v-for="product in search_source" :key="product['_id']" :style="{ margin: '12px auto' }">
                                 <a-card hoverable style="width: 300px" @click="openProductDetails" :style="{ border: '' }">
                                     <img
                                         :style="{ width: '100%', height: '240px', border: '' }"
@@ -92,7 +89,7 @@
     const searchAll = (items, term) =>{
         if(term){
             return items.filter(item =>
-                ((item !== undefined && item !== null) && item.toLowerCase().includes(term.toLowerCase()))
+                ((item !== undefined && item !== null) && item["product_name"].toLowerCase().includes(term.toLowerCase()))
             )
         }
 
@@ -106,10 +103,11 @@
             return{
                 loading: false,
                 createBtnDisabled: true,
+                filter_string: "",
                 searched_products: [],
                 rating_value: 3,
                 search_string: "",
-                data_source: ["mango", "banana", "orange", "lemon", "lime"],
+                data_source: [],
                 search_source: [],
             }
         },
@@ -135,23 +133,19 @@
                 console.log("To favorites")
             },
 
-            onSearch(search_text) {
-                // this.search_source = !search_text ? [] : [search_text, search_text.repeat(2), search_text.repeat(3)];
-                this.search_source = searchAll(this.data_source, search_text)
-            },
+            // onSearch(search_text) {
+            //     this.search_source = searchAll(this.searched_products, search_text)
+            // },
 
-            onSelect(value) {
-                console.log('onSelect', value);
-            },
-
-            onChange(value) {
-                console.log('onChange', value);
-            },
+            filterResults(){
+                this.search_source = searchAll(this.searched_products, this.filter_string)
+            }
         },
 
         async created(){
             this.loading = true
             this.searched_products = this.getSearchedProducts
+            this.search_source = this.searched_products
             // await this.fetchAllCompanies().then((response) => {
             //     // if(response.status === "info"){
             //     //     this.$message.info(response.message);
