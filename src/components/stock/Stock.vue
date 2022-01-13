@@ -68,7 +68,41 @@
 
                     <div :style="{ background: '', padding: '', textAlign: '' }">
                         <a-row :gutter="16" :style="{ margin: '12px auto 0 auto', border: '' }">
-                            <a-col :span="8" :style="{ margin: '12px auto' }">
+                            <a-col :span="8" v-for="product in stock" :key="product['_id']" :style="{ margin: '12px auto' }">
+                                <a-card style="width: 300px" :title="product['product_name']">
+                                    <img
+                                        :style="{ width: '100%', height: '240px', border: '' }"
+                                        slot="cover"
+                                        alt="example"
+                                        :src="product['image_url']"
+                                    />
+
+                                    <template slot="actions" class="ant-card-actions">
+                                        <span :style="{ display: 'flex', border: '', padding: '0 24px' }">
+                                            <a-rate v-model="product['rating']" disabled />
+                                            <!-- <a-icon key="edit" type="edit" /> -->
+                                            <a-icon
+                                                type="edit"
+                                                title="edit product information"
+                                                v-on:click.stop="toFavorites"
+                                                :style="{ fontSize: '24px', color: 'blue', marginLeft: 'auto' }"
+                                            />
+
+                                            <a-icon
+                                                type="delete"
+                                                title="delete product"
+                                                v-on:click.stop="toFavorites"
+                                                :style="{ fontSize: '24px', color: 'red', marginLeft: 'auto' }"
+                                            />
+                                        </span>
+                                    </template>
+
+                                    <a-card-meta :title="'$'+product['unit_price']" :description="'Stock Available: ' +  product['quantity_available']">
+                                    </a-card-meta>
+                                </a-card>
+                            </a-col>
+
+                            <!-- <a-col :span="8" :style="{ margin: '12px auto' }">
                                 <a-card style="width: 300px">
                                     <img
                                         :style="{ width: '100%', height: '240px', border: '' }"
@@ -80,7 +114,6 @@
                                     <template slot="actions" class="ant-card-actions">
                                         <span :style="{ display: 'flex', border: '', padding: '0 24px' }">
                                             <a-rate v-model="rating_value" disabled />
-                                            <!-- <a-icon key="edit" type="edit" /> -->
                                             <a-icon
                                                 type="edit"
                                                 title="edit product information"
@@ -114,7 +147,6 @@
                                     <template slot="actions" class="ant-card-actions">
                                         <span :style="{ display: 'flex', border: '', padding: '0 24px' }">
                                             <a-rate v-model="rating_value" disabled />
-                                            <!-- <a-icon key="edit" type="edit" /> -->
                                             <a-icon
                                                 type="edit"
                                                 title="edit product information"
@@ -134,41 +166,7 @@
                                     <a-card-meta title="Mouse" description="Stock available: 4">
                                     </a-card-meta>
                                 </a-card>
-                            </a-col>
-
-                            <a-col :span="8" :style="{ margin: '12px auto' }">
-                                <a-card style="width: 300px">
-                                    <img
-                                        :style="{ width: '100%', height: '240px', border: '' }"
-                                        slot="cover"
-                                        alt="example"
-                                        src="http://res.cloudinary.com/dk8b24l10/image/upload/v1641908136/product-catalog/product_image_klmdi3.jpg"
-                                    />
-
-                                    <template slot="actions" class="ant-card-actions">
-                                        <span :style="{ display: 'flex', border: '', padding: '0 24px' }">
-                                            <a-rate v-model="rating_value" disabled />
-                                            <!-- <a-icon key="edit" type="edit" /> -->
-                                            <a-icon
-                                                type="edit"
-                                                title="edit product information"
-                                                v-on:click.stop="toFavorites"
-                                                :style="{ fontSize: '24px', color: 'blue', marginLeft: 'auto' }"
-                                            />
-
-                                            <a-icon
-                                                type="delete"
-                                                title="delete product"
-                                                v-on:click.stop="toFavorites"
-                                                :style="{ fontSize: '24px', color: 'red', marginLeft: 'auto' }"
-                                            />
-                                        </span>
-                                    </template>
-
-                                    <a-card-meta title="Mouse" description="Stock available: 4">
-                                    </a-card-meta>
-                                </a-card>
-                            </a-col>
+                            </a-col> -->
                         </a-row>
                     </div>
                 </div>
@@ -178,7 +176,7 @@
 </template>
 
 <script>
-    // import { mapActions } from "vuex"
+    import { mapActions, mapGetters } from "vuex"
     import CreateProduct from "../../data_entry/create/CreateProduct"
     //   import UpdateEmployee from "../../data_entry/update/UpdateEmployee"
 
@@ -205,6 +203,7 @@
                 loading: false,
                 createBtnDisabled: true,
                 createProductVisible: false,
+                stock: [],
                 rating_value: 3,
                 search_string: "",
                 data_source: ["mango", "banana", "orange", "lemon", "lime"],
@@ -220,6 +219,7 @@
 
         methods: {
             // ...mapActions(["fetchAllCompanies", "fetchAllDepartments"]),
+            ...mapActions(["fetchStock"]),
 
             // openCreateSchedule(){
             //     this.$router.push({ name: "CreateProject" })
@@ -258,23 +258,24 @@
 
         async created(){
             this.loading = true
-            // await this.fetchAllCompanies().then((response) => {
-            //     // if(response.status === "info"){
-            //     //     this.$message.info(response.message);
-            //     // }
+            await this.fetchStock("61df5f9eaabc8e81b416507d").then((response) => {
+                // if(response.status === "info"){
+                //     this.$message.info(response.message);
+                // }
                 
-            //     // else if(response.status === "success"){
-            //     //     this.$message.success(response.message);
-            //     // }
+                if(response.status === "success"){
+                    this.$message.success(response.message);
+                    this.stock = this.getStock
+                }
                 
-            //     // else if(response.status === "warn"){
-            //     //     this.$message.warn(response.message);
-            //     // }
+                // else if(response.status === "warn"){
+                //     this.$message.warn(response.message);
+                // }
                 
-            //     if(response.status === "error"){
-            //         this.$message.error(response.message);
-            //     }
-            // })
+                if(response.status === "error"){
+                    this.$message.error(response.message);
+                }
+            })
 
             // await this.fetchAllDepartments().then((response) => {
             //     // if(response.status === "info"){
@@ -307,5 +308,6 @@
         // },
 
         // computed: mapGetters(["getDashboard", "getActiveUser"])
+        computed: mapGetters(["getStock"])
     }
 </script>

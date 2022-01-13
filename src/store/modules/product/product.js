@@ -1,11 +1,13 @@
 import axios from "axios"
 
 const state = {
-    products: []
+    products: [],
+    product_details: {}
 }
 
 const getters = {
     getProducts: (state) => state.products,
+    getProductDetails: (state) => state.product_details,
 }
 
 const actions = {
@@ -80,6 +82,65 @@ const actions = {
         }
     },
 
+    async refreshProductDetails({ commit }, product){
+        try{
+            commit("setProductDetails", product)
+
+            return{
+                "status": "success",
+                "message": "Product details successfully refreshed",
+                "data": product
+            }
+        }
+
+        catch(error){
+            // console.log(error)
+            return{
+                "status": "error",
+                "message": "Error encountered while refreshing product"
+            }
+        }
+    },
+
+    async rateProduct({ commit }, product){
+        let product_id = product["_id"]["$oid"]
+        let rating = product["rating"]
+
+        try{
+            let response = await axios.put(`rate-product`, {
+                product_id,
+                rating
+            })
+            
+            if(response["data"]["status"] === "200"){
+                product = response["data"]["data"]
+                // console.log(response["data"]["data"])
+                commit("setRatedProduct", product)
+
+                return{
+                    "status": "success",
+                    "message": "Product successfully rated"
+                }
+            }
+
+            else{
+                return{
+                    "status": "error",
+                    "message": "Failed to rate product"
+                }
+            }
+        }
+        
+        catch(error){
+            // console.log(error)
+                return{
+                    "status": "error",
+                    "message": "Server technical problem"
+                }
+        }
+    }
+}
+
     // async createProduct({ commit }, product){
     //     let product_name = product["product_name"]
     //     let category = product["category"]
@@ -126,11 +187,21 @@ const actions = {
     //         }
     //     }
     // }
-}
+
 
 const mutations = {
     setProducts: (state, products) => (state.products = products),
     setSearchedProducts: (state, products) => (state.searched_products = products),
+    setProductDetails: (state, product) => (state.product_details = product),
+    // setRatedProduct: (state, product) => (state.products = product),
+
+    setRatedProduct: (state, product) => {
+        const index = state.products.findIndex(x => x._id === product["_id"])
+
+        if(index !== -1){
+            state.products.splice(index, 1, product)
+        }
+    },
     // addProduct: (state, product) => (state.products.unshift(product[0])),
 }
 

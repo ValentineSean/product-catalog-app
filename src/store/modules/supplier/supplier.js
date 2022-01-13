@@ -9,7 +9,7 @@ const getters = {
 }
 
 const actions = {
-    async fetchSupplierStock({ commit }, supplier_id){
+    async fetchStock({ commit }, supplier_id){
         try{
             let response = await axios.get(`get-supplier-stock?supplier=${supplier_id}`)
             
