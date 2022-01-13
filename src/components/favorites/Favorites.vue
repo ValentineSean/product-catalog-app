@@ -1,7 +1,8 @@
 <template>
     <div>
         <div class="loading-spinner" v-if="loading">
-            <a-spin />
+            <!-- <a-spin /> -->
+            <a-skeleton active />
         </div>
 
         <div v-if="!loading">

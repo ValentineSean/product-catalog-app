@@ -1,7 +1,8 @@
 <template>
     <div>
         <div class="loading-spinner" v-if="loading">
-            <a-spin />
+            <!-- <a-spin /> -->
+            <a-skeleton active />
         </div>
 
         <div v-if="!loading">
@@ -174,7 +175,7 @@
             return{
                 loading: false,
                 createBtnDisabled: true,
-                rating_value: 3,
+                rating_value: 4,
                 search_string: "",
                 data_source: ["mango", "banana", "orange", "lemon", "lime"],
                 search_source: [],

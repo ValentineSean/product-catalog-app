@@ -13,7 +13,7 @@ import store from "./store/store";
 import Antd from "ant-design-vue"
 import "ant-design-vue/dist/antd.css"
 
-require("./store/subscriber");
+// require("./store/subscribe");
 
 axios.defaults.baseURL = "localhost:5000";
 

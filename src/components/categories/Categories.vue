@@ -1,10 +1,11 @@
 <template>
   <div>
-    <!-- <CreateEmployee @handleHide="hideCreateEmployee" :createEmployeeVisible="createEmployeeVisible" />
-    <UpdateEmployee :employee="employee" @handleHide="hideUpdateEmployee" :updateEmployeeVisible="updateEmployeeVisible" /> -->
+    <CreateCategory @handleHide="hideCreateCategory" :createCategoryVisible="createCategoryVisible" />
+    <!-- <UpdateEmployee :employee="employee" @handleHide="hideUpdateEmployee" :updateEmployeeVisible="updateEmployeeVisible" /> -->
 
     <div class="loading-spinner" v-if="loading">
-      <a-spin />
+      <!-- <a-spin /> -->
+      <a-skeleton active />
     </div>
 
     <div v-if="!loading">
@@ -144,6 +145,7 @@
 
 <script>
 //   import { mapActions, mapGetters } from "vuex"
+  import CreateCategory from "../../data_entry/create/CreateCategory"
 
   const allCategories = [
     {
@@ -172,7 +174,7 @@
     name: "Categories",
 
     components: {
-    //   CreateEmployee,
+      CreateCategory,
     //   UpdateEmployee,
     },
 
@@ -287,7 +289,7 @@
       openUpdateCategory(category){
         this.category = {...category}
         this.updateCategoryVisible = true
-        // console.log("Create employee")
+        // console.log("Create category")
       },
 
       hideUpdateCategory(){
