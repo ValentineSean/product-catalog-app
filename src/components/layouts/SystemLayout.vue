@@ -4,36 +4,39 @@
       v-model="collapsed"
       :trigger="null"
       collapsible
+      :style="{ background: 'rgb(3, 3, 67)' }"
     >
       <div class="logo" :style="{ border: '', height: '6%' }">
-          <h1 v-if="!collapsed" :style="{ color: 'white', margin: 'auto 0', fontWeight: 'bold', fontSize: 'medium' }">Product Catalog</h1>
+          <h1 v-if="!collapsed" :style="{ color: 'rgb(191, 120, 20)', margin: 'auto 0', fontWeight: 'bold', fontSize: '18px' }">Product Catalog</h1>
+
+          <img v-if="collapsed" :style="{ width: '100%', height: '100%', borderRadius: '50%' }" src="logo.png" alt="">
       </div>
 
-      <a-menu class="layout-sider-menu" theme="dark" mode="inline">
-        <a-menu-item key="1" @click="toProducts">
-            <a-icon type="shop" />
-            <span>Products</span>
+      <a-menu class="layout-sider-menu" theme="dark" mode="inline" :style="{ background: 'rgb(3, 3, 67)' }">
+        <a-menu-item key="1" @click="toProducts" v-if="getActiveUser['role'] === 'CUSTOMER'" :style="{ background: 'rgb(3, 3, 67)' }">
+            <a-icon :style="{ fontSize: '24px', color: 'rgb(191, 120, 20)' }" type="shop" />
+            <span :style="{ color: 'white', fontSize: '12px', fontWeight: 'bold' }">Products</span>
         </a-menu-item>
 
-        <a-menu-item key="2" @click="toFavorites">
+        <!-- <a-menu-item key="2" @click="toFavorites">
             <a-icon type="heart" />
             <span>Favorites</span>
+        </a-menu-item> -->
+
+        <a-menu-item key="3" @click="toStock" v-if="getActiveUser['role'] === 'SUPPLIER'">
+            <a-icon :style="{ fontSize: '24px', color: 'rgb(191, 120, 20)' }" type="gold" />
+            <span :style="{ color: 'white', fontSize: '12px', fontWeight: 'bold' }">Stock</span>
         </a-menu-item>
 
-        <a-menu-item key="3" @click="toStock">
-            <a-icon type="gold" />
-            <span>Stock</span>
-        </a-menu-item>
+        <!-- <a-menu-item key="4" @click="toCategories" v-if="getActiveUser['role'] === 'SUPPLIER'">
+            <a-icon :style="{ fontSize: '24px', color: 'rgb(191, 120, 20)' }" type="cluster" />
+            <span :style="{ color: 'white', fontSize: '12px', fontWeight: 'bold' }">Categories</span>
+        </a-menu-item> -->
 
-        <a-menu-item key="4" @click="toCategories">
-            <a-icon type="cluster" />
-            <span>Categories</span>
-        </a-menu-item>
-
-        <a-menu-item key="5" @click="toUsers">
+        <!-- <a-menu-item key="5" @click="toUsers" v-if="getActiveUser['role'] === 'S'">
             <a-icon type="team" />
             <span>Users</span>
-        </a-menu-item>
+        </a-menu-item> -->
       </a-menu>
     </a-layout-sider>
     
@@ -49,7 +52,7 @@
             <a-icon :style="{fontSize: '20px'}" slot="prefix" type="user" style="color: rgba(0,0,0,.25)" />
             <a-dropdown :trigger="['click']">
               <span class="ant-drop-down-link" :style="{ cursor: 'pointer' }">
-                <!-- {{ getActiveUser["first_name"] }} {{ getActiveUser["last_name"] }} -->
+                {{ getActiveUser["first_name"] }} {{ getActiveUser["last_name"] }}
                 <!-- {{ getActiveUser["email"] }} -->
                 <!-- John Doe -->
                 <a-icon type="caret-down" style="color: rgba(0,0,0,.25)" />
@@ -75,11 +78,15 @@
 
         <slot v-if="!loading" />
       </a-layout-content>
+
+      <a-layout-footer :style="{ textAlign: 'center', color: 'rgb(3, 3, 67)' }">
+        Valentine Sean Chanengeta ©2022 MongoDB Atlas Hackathon
+      </a-layout-footer>
     </a-layout>
   </a-layout>
 </template>
 <script>
-//   import { mapGetters, mapActions } from "vuex"
+  import { mapGetters } from "vuex"
 
   export default {
     data() {
@@ -115,20 +122,16 @@
             this.$router.replace({ name: "Categories" })
         },
 
-        toPayrolls(){
-            this.$router.replace({ name: "Payrolls" })
-        },
-
         // LOGOUT
-        // async logout(){
-        //   this.loading = true
-        //   this.logoutUser(false)
-        //   window.sessionStorage.removeItem('vuex');
-        //   window.sessionStorage.clear()
-        //   this.$router.replace({ name: 'Login' });
-        //   this.$message.info("You have successfully logged out")
-        //   this.loading = false
-        // }
+        async logout(){
+          // this.loading = true
+          // this.logoutUser(false)
+          // window.sessionStorage.removeItem('vuex');
+          // window.sessionStorage.clear()
+          this.$router.replace({ name: 'Login' });
+          // this.$message.info("You have successfully logged out")
+          // this.loading = false
+        }
     },
 
     created(){
@@ -139,7 +142,7 @@
         // Mounted hook
     },
 
-    // computed: mapGetters(["getActiveUser"])
+    computed: mapGetters(["getActiveUser"])
   };
 </script>
 <style>

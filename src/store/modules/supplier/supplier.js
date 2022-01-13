@@ -29,6 +29,8 @@ const actions = {
             }
 
             else{
+                commit("setStock", [])
+
                 return{
                     "status": "error",
                     "message": "Failed to fetch stock"
@@ -76,6 +78,8 @@ const actions = {
             }
 
             else{
+                // commit("addProduct", [])
+
                 return{
                     "status": "error",
                     "message": "Failed to create product"

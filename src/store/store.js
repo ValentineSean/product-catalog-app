@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 import VuexPersistence from 'vuex-persist';
 
 // STORE MODULES
-// import auth from './modules/auth/auth';
+import auth from './modules/auth/auth';
 import product from './modules/product/product';
 import supplier from './modules/supplier/supplier';
 import user from './modules/user/user';
@@ -17,7 +17,7 @@ const vuexLocal = new VuexPersistence({
 
 const store = new Vuex.Store({
     modules: {
-        // auth,
+        auth,
         product,
         supplier,
         user,

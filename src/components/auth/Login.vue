@@ -53,7 +53,7 @@
 </template>
 
 <script>
-    // import { mapActions, mapGetters } from "vuex"
+    import { mapActions, mapGetters } from "vuex"
     // import { mapActions } from "vuex"
 
     export default {
@@ -71,8 +71,7 @@
         },
         
         methods: {
-            // ...mapActions(["login", "activate"]),
-            // ...mapActions(["login"]),
+            ...mapActions(["login"]),
 
             handleSubmit() {
                 console.log("Handle submit")
@@ -80,24 +79,30 @@
 
             async authenticate(){
                 this.loginBtnLoading = true
-                this.$router.push({ name: "Products" })
 
-                // let user = {
-                //     email: this.email,
-                //     password: this.password
-                // }
+                let user = {
+                    email: this.email,
+                    password: this.password
+                }
 
-                // await this.login(user).then((response) => {
-                //     if(response["status"] === "success"){
-                //         this.$message.success(response["message"])
+                await this.login(user).then((response) => {
+                    if(response["status"] === "success"){
 
-                //         this.$router.push({ name: "Dashboard" })
-                //     }
+                        if(this.getActiveUser["role"] === "CUSTOMER"){
+                            this.$router.push({ name: "Products" })
+                        }
 
-                //     else if(response["status"] === "error"){
-                //         this.$message.error(response["message"])
-                //     }
-                // })
+                        else if(this.getActiveUser["role"] === "SUPPLIER"){
+                            this.$router.push({ name: "Stock" })
+                        }
+
+                        this.$message.success(response["message"])
+                    }
+
+                    else if(response["status"] === "error"){
+                        this.$message.error(response["message"])
+                    }
+                })
 
                 this.loginBtnLoading = false
             },
@@ -111,7 +116,7 @@
             // }
         },
 
-        // computed: mapGetters(["getLoggedIn"])
+        computed: mapGetters(["getActiveUser"])
     }
 </script>
 <style>

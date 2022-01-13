@@ -44,7 +44,7 @@
                                         <span :style="{ display: 'flex', border: '', padding: '0 24px' }">
                                             <a-rate v-model="product['rating']" disabled />
                                             <!-- <a-icon key="edit" type="edit" /> -->
-                                            <a-icon
+                                            <!-- <a-icon
                                                 type="edit"
                                                 title="edit product information"
                                                 v-on:click.stop="toFavorites"
@@ -56,7 +56,7 @@
                                                 title="delete product"
                                                 v-on:click.stop="toFavorites"
                                                 :style="{ fontSize: '24px', color: 'red', marginLeft: 'auto' }"
-                                            />
+                                            /> -->
                                         </span>
                                     </template>
 
@@ -64,72 +64,6 @@
                                     </a-card-meta>
                                 </a-card>
                             </a-col>
-
-                            <!-- <a-col :span="8" :style="{ margin: '12px auto' }">
-                                <a-card style="width: 300px">
-                                    <img
-                                        :style="{ width: '100%', height: '240px', border: '' }"
-                                        slot="cover"
-                                        alt="example"
-                                        src="http://res.cloudinary.com/dk8b24l10/image/upload/v1641908136/product-catalog/product_image_klmdi3.jpg"
-                                    />
-
-                                    <template slot="actions" class="ant-card-actions">
-                                        <span :style="{ display: 'flex', border: '', padding: '0 24px' }">
-                                            <a-rate v-model="rating_value" disabled />
-                                            <a-icon
-                                                type="edit"
-                                                title="edit product information"
-                                                v-on:click.stop="toFavorites"
-                                                :style="{ fontSize: '24px', color: 'blue', marginLeft: 'auto' }"
-                                            />
-
-                                            <a-icon
-                                                type="delete"
-                                                title="delete product"
-                                                v-on:click.stop="toFavorites"
-                                                :style="{ fontSize: '24px', color: 'red', marginLeft: 'auto' }"
-                                            />
-                                        </span>
-                                    </template>
-
-                                    <a-card-meta title="Mouse" description="Stock available: 4">
-                                    </a-card-meta>
-                                </a-card>
-                            </a-col>
-
-                            <a-col :span="8" :style="{ margin: '12px auto' }">
-                                <a-card style="width: 300px">
-                                    <img
-                                        :style="{ width: '100%', height: '240px', border: '' }"
-                                        slot="cover"
-                                        alt="example"
-                                        src="http://res.cloudinary.com/dk8b24l10/image/upload/v1641908136/product-catalog/product_image_klmdi3.jpg"
-                                    />
-
-                                    <template slot="actions" class="ant-card-actions">
-                                        <span :style="{ display: 'flex', border: '', padding: '0 24px' }">
-                                            <a-rate v-model="rating_value" disabled />
-                                            <a-icon
-                                                type="edit"
-                                                title="edit product information"
-                                                v-on:click.stop="toFavorites"
-                                                :style="{ fontSize: '24px', color: 'blue', marginLeft: 'auto' }"
-                                            />
-
-                                            <a-icon
-                                                type="delete"
-                                                title="delete product"
-                                                v-on:click.stop="toFavorites"
-                                                :style="{ fontSize: '24px', color: 'red', marginLeft: 'auto' }"
-                                            />
-                                        </span>
-                                    </template>
-
-                                    <a-card-meta title="Mouse" description="Stock available: 4">
-                                    </a-card-meta>
-                                </a-card>
-                            </a-col> -->
                         </a-row>
                     </div>
                 </div>
@@ -221,7 +155,8 @@
 
         async created(){
             this.loading = true
-            await this.fetchStock("61df5f9eaabc8e81b416507d").then((response) => {
+            let supplier = this.getActiveUser["_id"]["$oid"]
+            await this.fetchStock(supplier).then((response) => {
                 // if(response.status === "info"){
                 //     this.$message.info(response.message);
                 // }
@@ -289,6 +224,6 @@
         // },
 
         // computed: mapGetters(["getDashboard", "getActiveUser"])
-        computed: mapGetters(["getStock"])
+        computed: mapGetters(["getStock", "getActiveUser"])
     }
 </script>

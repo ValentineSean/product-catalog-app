@@ -35,7 +35,7 @@
                                             @select="onSelect"
                                             @search="onSearch"
                                             @change="onChange"
-                                            :style="{ border: '', marginLeft: '' }"
+                                            :style="{ border: '', marginLeft: '', outline: 'none' }"
                                         >   
                                             <a-input>
                                                 <a-button
@@ -75,14 +75,14 @@
                                     <template slot="actions" class="ant-card-actions">
                                         <span :style="{ display: 'flex', border: '', padding: '0 24px' }">
                                             <a-rate v-model="product['rating']" disabled />
-                                            <a-icon
+                                            <!-- <a-icon
                                                 key="ellipsis"
                                                 type="heart"
                                                 title="add to your favorites"
                                                 v-on:click.stop="toFavorites"
                                                 :style="{ fontSize: '24px', color: 'blue', marginLeft: 'auto' }"
                                                 v-if="!load_favorite"
-                                            />
+                                            /> -->
                                             <a-spin v-if="load_favorite" :style="{ fontSize: '24px', color: 'red', marginLeft: 'auto' }" />
                                         </span>
                                     </template>

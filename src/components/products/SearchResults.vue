@@ -40,7 +40,7 @@
                     <div :style="{ background: '', padding: '', textAlign: '' }">
                         <a-row :gutter="16" :style="{ margin: '12px auto 0 auto', border: '' }">
                             <a-col :span="8" v-for="product in search_source" :key="product['_id']" :style="{ margin: '12px auto' }">
-                                <a-card hoverable style="width: 300px" @click="openProductDetails" :style="{ border: '' }">
+                                <a-card hoverable style="width: 300px" @click="openProductDetails(product)" :style="{ border: '' }">
                                     <img
                                         :style="{ width: '100%', height: '240px', border: '' }"
                                         slot="cover"
@@ -52,13 +52,13 @@
                                         <span :style="{ display: 'flex', border: '', padding: '0 24px' }">
                                             <a-rate v-model="product['rating']" disabled />
                                             <!-- <a-icon key="edit" type="edit" /> -->
-                                            <a-icon
+                                            <!-- <a-icon
                                                 key="ellipsis"
                                                 type="heart"
                                                 title="add to your favorites"
                                                 v-on:click.stop="toFavorites"
                                                 :style="{ fontSize: '24px', color: 'blue', marginLeft: 'auto' }"
-                                            />
+                                            /> -->
                                         </span>
                                     </template>
 
@@ -75,7 +75,7 @@
 </template>
 
 <script>
-    import { mapGetters } from "vuex"
+    import { mapGetters, mapActions } from "vuex"
 
     const searchAll = (items, term) =>{
         if(term){
@@ -110,14 +110,23 @@
         },
 
         methods: {
-            // ...mapActions(["fetchAllCompanies", "fetchAllDepartments"]),
+            ...mapActions(["refreshProductDetails"]),
 
             // openCreateSchedule(){
             //     this.$router.push({ name: "CreateProject" })
             // },
 
-            openProductDetails(){
-                this.$router.push({ name: "Product Details" })
+            openProductDetails(product){
+                this.refreshProductDetails(product).then((response) => {
+                    if(response.status === "success"){
+                        // this.$message.success(response.message);
+                        this.$router.push({ name: "Product Details" })
+                    }
+
+                    if(response.status === "error"){
+                        this.$message.error(response.message);
+                    }
+                })
             },
 
             toFavorites(){

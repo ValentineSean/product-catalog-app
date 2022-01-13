@@ -30,6 +30,8 @@ const actions = {
             }
 
             else{
+                commit("setProducts", [])
+
                 return{
                     "status": "error",
                     "message": "Failed to fetch products"

@@ -97,7 +97,7 @@
                 category_id: "",
                 quantity_available: 0,
                 unit_price: 0,
-                supplier: "61df5f9eaabc8e81b416507d",
+                // supplier: "61df5f9eaabc8e81b416507d",
                 product_image: null
                 // company: this.getActiveUser["company"],
             };
@@ -129,7 +129,7 @@
                     category: this.category_id,
                     quantity_available: this.quantity_available,
                     unit_price: this.unit_price,
-                    supplier: this.supplier,
+                    supplier: this.getActiveUser["_id"]["$oid"],
                     product_image: this.product_image,
                 }
 
@@ -163,6 +163,6 @@
             },
         },
 
-        computed: mapGetters(["getCategories"]),
+        computed: mapGetters(["getCategories", "getActiveUser"]),
     };
 </script>
